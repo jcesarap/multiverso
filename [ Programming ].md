@@ -18,3 +18,6 @@ https://mui.com/material-ui/
 
 # Paced
 * GitHub Integration
+
+# Side notes
+* Chosen license: GPL-3.0. Restrictive of commercial use and closed source forks - can't be used on such projects at all.
