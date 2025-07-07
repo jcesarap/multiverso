@@ -7,18 +7,18 @@ const { app, BroserWindow } = require('electron')
 
 const createWindow = () => {
   // Creates a new instance of the BrowserWindow object, with the following properties
-  const win = new BrowserWindow({
+  const win = new BrowserWindow({ // Stores reference to new window to win
     width: 800,
     height: 600
   })
   // Populate the instance
-  win.loadFile('index.html') // .loadfile() is a method of BrowserWindow
+  win.loadFile('index.html') // .loadfile() is a method of BrowserWindow (which is stored in win)
 }
 
 app.whenReady().then(() => {
   createWindow()
 })
 
-// Continue reading from: 
+// Continue reading from:
 // https://www.electronjs.org/docs/latest/tutorial/tutorial-first-app
-// and: https://nodejs.org/api/events.html#events & https://react.dev/learn/installation
+// and: https://nodejs.org/api/events.html#events & https://react.dev/learn/installation (React is Paced for 2st recess)
