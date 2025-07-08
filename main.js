@@ -1,4 +1,4 @@
-const { app, BroserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron')
 // Code is read right to left, inside out!!!
 //      Imports electron module/framework
 //      Assigns to the left
@@ -15,8 +15,16 @@ const createWindow = () => {
   win.loadFile('index.html') // .loadfile() is a method of BrowserWindow (which is stored in win)
 }
 
+// app is Electron’s module that controls the main application lifecycle.
+// whenReady() returns a Promise that resolves when Electron has finished initializing
+// .then() is a method used with Promises - when the thing I’m waiting for finishes, then do this next thing
+// it could be just app.whenReady().then(createWindow)... but then you couldn't do the following, or add more functions (this acts as a main())
 app.whenReady().then(() => {
-  createWindow()
+  try {
+    createWindow()
+  } catch (e) {
+    console.error('Failed to create window:', e)
+  }
 })
 
 // Continue reading from:
