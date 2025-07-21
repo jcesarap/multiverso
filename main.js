@@ -30,3 +30,5 @@ app.whenReady().then(() => {
 // Continue reading from:
 // https://www.electronjs.org/docs/latest/tutorial/tutorial-first-app
 // and: https://nodejs.org/api/events.html#events & https://react.dev/learn/installation (React is Paced for 2st recess)
+
+// NOTES ON PACKAGING CAN BE FOUND ON "r-electron.md"
