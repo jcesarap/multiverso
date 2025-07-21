@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-
 <html>
+
   <head> <!-- Metadata -->
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <!-- Responsive design -->
@@ -10,21 +10,38 @@
   </head>
 
   <body>
-    <!-- Column 1 -->
-    <h1>ultiverso</h1> <!-- M removed for icon -->
-    <h2>Design, vídeo, áudio... seja lá o que for...</h2>
-    <p>Crie checkpoints do seu trabalho, volte ele no tempo, alterne entre versões diferentes, ou colabore.</p>
+     <div class="container">
 
-    <!-- Column 2 -->
-     <h3>Projetos</h3>
-     <button>Criar</button>       <!-- Blue background, white font, no borders -->
-     <button>Abrir</button>       <!-- Empty background, blue font, blue borders -->
-     <button>RECENTES</button>    <!-- Dropdown menu: Blue background, white font, no border // rounded (top/down left) -->
-     <button><!-- Arrow icon --></button>            <!-- Arrow side / Arrow down, Left gray border, rounded (top/down right) -->
-     <!-- Interactive dropdown -->
 
-     <!-- Column 3 -->
-      <button><!-- Profile icon --></button>
 
+      <div class="column left"> <!-- Two classes separated by spaces -->
+        <div class="left_column_content">
+          <h1 class="column_heading">ultiverso</h1> <!-- M removed for icon -->
+          <h2>Design, vídeo, áudio... seja lá o que for...</h2>
+          <p>Crie checkpoints do seu trabalho, volte ele no tempo, alterne entre versões diferentes, ou colabore.</p>
+        </div>
+      </div>
+
+
+
+      <div class="column right"> <!-- More readable, can apply styles to both columns, or single columns -->
+        <div class="right_column_content">
+          <h3>Projetos</h3>
+          <button>Criar</button>       <!-- Blue background, white font, no borders -->
+          <button>Abrir</button>       <!-- Empty background, blue font, blue borders -->
+
+            <div class="dropdown">
+              <button>RECENTES</button>    <!-- Dropdown menu: Blue background, white font, no border // rounded (top/down left) -->
+              <button>v<!-- Arrow icon --></button>            <!-- Arrow side / Arrow down, Left gray border, rounded (top/down right) -->
+              <!-- Interactive dropdown -->
+            </div>
+          
+         </div>
+         <button class="profile"><!-- Profile icon --></button> <!-- Border -->
+      </div>
+      
+
+      
+     </div>
   </body>
 </html>
