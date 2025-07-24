@@ -12,11 +12,25 @@
   <body>
      <div class="container">
 
-
+      <div id="profile-overlay">
+        <div class="profile-overlay-content">
+          <button id="close" class="close"><!-- Profile icon --></button> <!-- Border -->
+          <div class="overlay-heading">
+            <h1>Cadastro rápido (offline)</h1>
+            <p>Informações necessárias para o app funcionar - para assinar alterações/versões nas funções de colaboração</p>
+          </div>
+            <input type="email" id="email" placeholder="seu_email@email.com">
+            <input type="username" id="username" placeholder="seu nome">
+            <button id="">SALVAR</button>
+        </div>
+      </div>
 
       <div class="column left"> <!-- Two classes separated by spaces -->
         <div class="left_column_content">
-          <h1 class="column_heading">ultiverso</h1> <!-- M removed for icon -->
+          <div class="logo-heading"> <!-- Goal was to align these, so create a new/more-specific rule/class, and tell it to be inline -->
+            <img src="/assets/design/icon_heading.svg" alt="logo" class="heading-image">
+            <h1 class="column_heading">ultiverso</h1> <!-- M removed for icon -->
+          </div>
           <h2>Design, vídeo, áudio... seja lá o que for...</h2>
           <p>Crie checkpoints do seu trabalho, volte ele no tempo, alterne entre versões diferentes, ou colabore.</p>
         </div>
@@ -30,19 +44,25 @@
           <button>Criar</button>       <!-- Blue background, white font, no borders -->
           <button>Abrir</button>       <!-- Empty background, blue font, blue borders -->
 
-            <div class="dropdown">
-              <button>RECENTES</button>    <!-- Dropdown menu: Blue background, white font, no border // rounded (top/down left) -->
-              <button>v<!-- Arrow icon --></button>            <!-- Arrow side / Arrow down, Left gray border, rounded (top/down right) -->
+            <div id="dropdown-button" class="dropdown"> <!-- By doing this, they stack together in another way -->
+              <button class="recentes">RECENTES</button>    <!-- Dropdown menu: Blue background, white font, no border // rounded (top/down left) -->
+              <button id="dropdown-icon" class="icon">∨<!-- Arrow icon --></button>            <!-- Arrow side / Arrow down, Left gray border, rounded (top/down right) -->
               <!-- Interactive dropdown -->
             </div>
+            <ul id="dropdown-menu">
+              <li>item1</li>
+              <li>item2</li>
+              <li>item3</li>
+            </ul>
           
          </div>
-         <button class="profile"><!-- Profile icon --></button> <!-- Border -->
+         <button class="profile" id="profile"><!-- Profile icon --></button> <!-- Border -->
          <p class="reminder">BETA (Implement all features, roughly - polish design later)</p> <!-- -->
       </div>
       
 
       
      </div>
+     <script src="/src/js/ui.js"></script>
   </body>
 </html>
