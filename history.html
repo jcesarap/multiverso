@@ -5,17 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <!-- Responsive design -->
         <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" /> -->
         <!-- <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" /> -->
-        <link rel="stylesheet" href="/src/css/home.css">
+        <link rel="stylesheet" href="/src/css/history.css">
     </head>
 
     <body>
         <!--                UPPER BAR       -->
         <div id="top">
-            <h1 class="left">Versões Paralelas</h1>
             <div class="right">
                 <h2>Filmagens de drone</h2>
                 <button id="button-close"></button>
-                <h1 id="header">Arquivos</h1>
+                <h1 id="header">Histórico</h1>
             </div>
         </div>
 
@@ -24,8 +23,9 @@
         <div id="bottom">
             <p>Salvo pela última vez hoje às 11:30 - por chiquim_das_panela</p>
             <div class="right">
-                <button>HISTÓRICO</button>
-                <button>SALVAR</button>
+                <button id="delete">DELETAR</button>
+                <button id="edit">EDITAR</button>
+                <button>VOLTAR NO TEMPO</button>
             </div>
         </div>
 
@@ -41,9 +41,14 @@
                     <button id="add"></button> <!-- Add Button -->
                 </div>
                 <ul class="versions">
-                    <li>Preto e branco</li>
-                    <li>Colorido</li>
-                    <li>Versão de Carlos</li>
+                    <li>
+                        Preto e branco
+                        <p>Descrição da versão</p>
+                    </li>
+                    <li>
+                        Colorido
+                        <p>Descrição da versão</p>
+                    </li>
                 </ul>
 
             </div>

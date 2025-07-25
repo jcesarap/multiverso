@@ -1,0 +1,140 @@
+/* Pseudo-class */
+:root { /* Make available throughout document */
+  /* Custom properties */
+  --background-color: #1E1E1E;
+  --blue: #1976D2;
+  --white: #fffdfc;
+  --grayed_text: #b5b5b5;
+  --darkblue: #030019;
+  --red: #FF0004;
+}
+
+* {}
+
+/* Selecting elements */
+html, body { 
+    font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    height: 100%;
+    width: 100%;
+    margin: 0; /* Otherwise it does get truly fullscreen */
+    background-color: var(--darkblue);
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 300;
+    padding-top: 1rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-weight: lighter;
+}
+
+button {
+    background-color: #1976D2;
+    border: 0;
+    border-radius: 5px;
+}
+
+li {
+    list-style-type: none;
+}
+
+/* 
+
+
+        TOP
+
+
+*/
+
+div .right {
+    /* Where */
+    position: fixed;
+    top: 1rem;
+    right: 6rem;
+    /* Style */
+    color: var(--grayed_text);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 10px;
+}
+
+.right #header {
+    position: fixed;
+    top: 4rem;
+}
+
+.right {
+    justify-content: flex-end;
+}
+
+/* 
+
+
+        MID
+
+
+*/
+
+.mid-box {
+    display: flex;
+    justify-content: center; /* horizontal centering */
+    align-items: center;     /* vertical centering */
+    height: 100vh;           /* take full viewport height */
+}
+
+.mid-content input {
+    /* WHERE */
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    /* STYLE */
+    background-color: var(--darkblue);
+    padding: 1rem;
+    color: var(--white);
+    border-radius: 1rem
+}
+
+#title {
+    height: 5vh;
+    width: 50vw;
+    border: none;
+}
+
+#description {
+    height: 40vh;
+    width: 50vw;
+    border: none;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.mid-content button {
+    /* WHERE */
+    /* STYLE */
+    background-color: var(--darkblue);
+    padding: 1rem;
+    color: var(--white);
+    border-radius: 1rem
+}
+
+#save {
+    /* STYLE */
+    background-color: #2E7D32;
+    padding: 1rem;
+    color: var(--white);
+    border-radius: 1rem
+}
+
+#delete {
+    color: var(--red);
+}

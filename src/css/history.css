@@ -5,6 +5,8 @@
   --blue: #1976D2;
   --white: #fffdfc;
   --grayed_text: #b5b5b5;
+  --darkblue: #030019;
+  --red: #FF0004;
 }
 
 * {}
@@ -15,7 +17,7 @@ html, body {
     height: 100%;
     width: 100%;
     margin: 0; /* Otherwise it does get truly fullscreen */
-    background-color: var(--background-color);
+    background-color: var(--darkblue);
 }
 
 h1 {
@@ -143,6 +145,17 @@ div .right {
     color: var(--blue);
 }
 
+.versions p.selected {
+    color: var(--blue);
+}
+
+.versions li.selected {
+    color: var(--blue);
+    border-left: 2rem solid var(--blue); /* Blue border on the left */
+    padding-left: 4rem; /* Optional: space between text and border */
+}
+
+
 .column.right {
     /* Where */
     top: 15rem;
@@ -165,7 +178,12 @@ div .right {
 }
 
 .versions li {
-    padding-bottom: 3rem;
+    padding-bottom: 0;
+}
+
+.versions p {
+    padding-bottom: 2rem;
+    padding-left: 3rem;
 }
 
 /* 
@@ -200,4 +218,12 @@ div .right {
     width: 8vw;
     height: 3vw;
     color: var(--white);
+}
+
+#delete {
+    background-color: transparent;
+}
+
+#edit {
+    background-color: transparent;
 }

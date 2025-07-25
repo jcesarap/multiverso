@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <!-- Responsive design -->
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" /> -->
+        <!-- <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" /> -->
+        <link rel="stylesheet" href="/src/css/edit.css">
+    </head>
+
+    <body>
+        <!-- OVERLAY -->
+         <div id="delete-dialog">
+            <p>TEM CERTEZA QUE QUER<br>EXCLUIR ESSA VERSÃO?</p>
+            <div class="delete-buttons">
+                <button id="cancel" class="confirm-delete">CANCELAR</button>
+                <button id="confirm" class="cancel">CONFIRMAR</button>
+            </div>
+        </div>
+        
+        
+        <!--                TOP             -->
+        <div id="top">
+            <div class="right">
+                <h2>Filmagens de drone</h2>
+                <h1 id="header">EDITAR VERSÃO</h1>
+            </div>
+        </div>
+
+        <!--                MID             -->
+        <div class="mid-box">
+            <div class="mid-content">
+                <input type="title" id="title" placeholder="Título da atualização">
+                <input type="description" id="description" placeholder="Descreva o progresso">
+                <div class="buttons">
+                    <button id="delete">EXCLUIR</button>
+                    <button>CANCELAR</button>
+                    <button id="save">SALVAR</button>
+                </div>
+            </div>
+        </div>
+        
+        <script src="/src/js/ui.js"></script>
+    </body>
+</html>
