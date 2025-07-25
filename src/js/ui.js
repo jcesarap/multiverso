@@ -1,6 +1,5 @@
 // Managing menus
 
-
 // SOURCING DOM ELEMENTS
 
 const profileButton = document.getElementById('profile'); // It stores a REFERENCE to that (DOM) ELEMENT in a VARIABLE - so you can attach behavior to it.
@@ -28,4 +27,19 @@ dropdownButton.addEventListener('click', () => { // the method/function      ".a
     dropdownMenu.classList.toggle('show'); // It uses it when appropriate
     // References DOM element defined in JS above; classList manipulates class property of DOM element; adds/removes (toggles) show
     dropdownIcon.textContent = dropdownMenu.classList.contains('show') ? '∧' : '∨';
+});
+
+// MOUSE INDICATIONS
+
+document.addEventListener("DOMContentLoaded", function () {
+    const versionItems = document.querySelectorAll(".versions li");
+
+    versionItems.forEach(item => {
+        item.addEventListener("click", function () {
+            // Remove 'selected' from all
+            versionItems.forEach(i => i.classList.remove("selected"));
+            // Add 'selected' to the clicked one
+            this.classList.add("selected");
+        });
+    });
 });
