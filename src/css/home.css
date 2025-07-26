@@ -139,7 +139,7 @@ div .right {
 */
 
 
-.versions li.selected {
+.left .versions li.selected {
     color: var(--blue);
 }
 
@@ -160,7 +160,7 @@ div .right {
 
 .column.left .versions {
     position: fixed;
-    top: 23rem;
+    top: 19rem;
     left: 15rem;
 }
 

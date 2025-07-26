@@ -9,9 +9,13 @@ const createWindow = () => {
   // Creates a new instance of the BrowserWindow object, with the following properties
   const win = new BrowserWindow({ // Stores reference to new window to win
     width: 800,
-    height: 600
+    height: 600,
+    resizable: false,
+    maximizable: false
   })
+
   // Populate the instance
+  win.maximize();
   win.loadFile('index.html') // .loadfile() is a method of BrowserWindow (which is stored in win)
 }
 

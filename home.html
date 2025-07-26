@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="/src/css/home.css">
     </head>
 
-    <body>
+    <body data-page="home"> <!-- data-* is a custom attribute (found upon research) -->
         <!--                UPPER BAR       -->
         <div id="top">
             <h1 class="left">Versões Paralelas</h1>
@@ -24,8 +24,8 @@
         <div id="bottom">
             <p>Salvo pela última vez hoje às 11:30 - por chiquim_das_panela</p>
             <div class="right">
-                <button>HISTÓRICO</button>
-                <button>SALVAR</button>
+                <button id="history">HISTÓRICO</button>
+                <button id="save">SALVAR</button>
             </div>
         </div>
 
@@ -63,7 +63,7 @@
             </div>
          </div>
 
-
+        <script src="/src/js/renderer.js"></script>
         <script src="/src/js/ui.js"></script>
     </body>
 </html>

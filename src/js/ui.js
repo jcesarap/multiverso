@@ -1,22 +1,40 @@
 // Managing menus
 
+// Ensure the DOM is fully loaded before running scripts
 document.addEventListener("DOMContentLoaded", () => {
-    initProfileMenu();
-    initDropdownMenu();
-    initVersionSelection();
-    initConfirmDeletion();
+    profileMenu();
+    dropdownMenu();
+    versionSelection();
+    confirmDeletion();
 });
 
-function initProfileMenu() {
+function profileMenu() {
+    // CREATE
+    const createButton = document.getElementById('create'); // Same as above here
+    const newProjectOverlay = document.getElementById('new-project-overlay'); // Same as above here 
+    const closeButtonProject = document.getElementById('close-project'); // Same as above here
+
     // SOURCING DOM ELEMENTS
     const profileButton = document.getElementById('profile'); // It stores a REFERENCE to that (DOM) ELEMENT in a VARIABLE - so you can attach behavior to it.
     const profileOverlay = document.getElementById('profile-overlay'); // Same as above here
-    const closeButton = document.getElementById('close'); // Same as above here
+    const closeButtonProfile = document.getElementById('close-profile'); // Same as above here
 
 
 
     // LOAD ONLY IF ON PAGE, OTHERWISE SCRIPT CRASHES
-    if (!profileButton || !profileOverlay || !closeButton) return; // If either aren't in current page, exit
+    if (!profileButton || !profileOverlay || !closeButtonProject || !closeButtonProfile || !createButton || !newProjectOverlay) return; // If either aren't in current page, exit
+
+
+    createButton.addEventListener('click', () => { // the method/function      ".addEventListener"     receives another function (anonymous) as its 2st parameter
+        newProjectOverlay.classList.toggle('show'); // It uses it when appropriate
+        // References DOM element defined in JS above; classList manipulates class property of DOM element; adds/removes (toggles) show
+    });
+
+    closeButtonProject.addEventListener('click', () => { // the method/function      ".addEventListener"     receives another function (anonymous) as its 2st parameter
+        newProjectOverlay.classList.toggle('show'); // It uses it when appropriate
+        // References DOM element defined in JS above; classList manipulates class property of DOM element; adds/removes (toggles) show
+    });
+
 
 
 
@@ -26,13 +44,13 @@ function initProfileMenu() {
         // References DOM element defined in JS above; classList manipulates class property of DOM element; adds/removes (toggles) show
     });
 
-    closeButton.addEventListener('click', () => { // the method/function      ".addEventListener"     receives another function (anonymous) as its 2st parameter
+    closeButtonProfile.addEventListener('click', () => { // the method/function      ".addEventListener"     receives another function (anonymous) as its 2st parameter
         profileOverlay.classList.toggle('show'); // It uses it when appropriate
         // References DOM element defined in JS above; classList manipulates class property of DOM element; adds/removes (toggles) show
     });
 }
 
-function initDropdownMenu() {
+function dropdownMenu() {
     const dropdownButton = document.getElementById('dropdown-button'); // Same as above here
     const dropdownMenu = document.getElementById('dropdown-menu'); // Same as above here
     const dropdownIcon = document.getElementById('dropdown-icon');
@@ -51,7 +69,7 @@ function initDropdownMenu() {
 }
 
 
-function initVersionSelection() {
+function versionSelection() {
     // SOURCE DOM ELEMENT FOR JS REFERENCING
     const lists = document.querySelectorAll(".versions");
 
@@ -59,7 +77,7 @@ function initVersionSelection() {
     lists.forEach((list) => {
         // # For each
         // * Takes function as argument, and runs it on every element of list/array
-        // * "list" is the definition of a parameter to the arrow function, so you can reference in it...
+        // * "list" is the defion of a parameter to the arrow function, so you can reference in it...
         // * To operate the current iteration of data
         list.addEventListener("click", (event) => {
             // Mark with variable target of click
@@ -91,11 +109,11 @@ function initVersionSelection() {
 }
 
 
-function initConfirmDeletion() {
+function confirmDeletion() {
     // SOURCING DOM ELEMENTS
     const deleteOverlay = document.getElementById('delete-dialog'); // Same as above here
 
-    const cancelButton = document.getElementById('cancel'); // It stores a REFERENCE to that (DOM) ELEMENT in a VARIABLE - so you can attach behavior to it.
+    const cancelButton = document.getElementById('cancel-delete'); // It stores a REFERENCE to that (DOM) ELEMENT in a VARIABLE - so you can attach behavior to it.
     const confirmButton = document.getElementById('confirm'); // Same as above here
     const deleteButton = document.getElementById('delete'); // Same as above here
 

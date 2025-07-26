@@ -4,31 +4,42 @@
   <head> <!-- Metadata -->
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <!-- Responsive design -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" /> <!-- Security boilerplate -->
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" /> <!-- Same for older software -->
-    <link rel="stylesheet" href="/src/css/index.css"
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <link rel="stylesheet" href="/src/css/index.css">
   </head>
 
-  <body>
+  <body data-page="index">
      <div class="container">
 
       <div id="profile-overlay">
         <div class="profile-overlay-content">
-          <button id="close" class="close"><!-- Profile icon --></button> <!-- Border -->
+          <button id="close-profile" class="close"><!-- Profile icon --></button> <!-- Border -->
           <div class="overlay-heading">
             <h1>Cadastro rápido (offline)</h1>
             <p>Informações necessárias para o app funcionar - para assinar alterações/versões nas funções de colaboração</p>
           </div>
             <input type="email" id="email" placeholder="seu_email@email.com">
             <input type="username" id="username" placeholder="seu nome">
-            <button id="">SALVAR</button>
+            <button>SALVAR</button>
+        </div>
+      </div>
+
+      <div id="new-project-overlay">
+        <div id="profile-overlay-content" class="profile-overlay-content">
+          <button id="close-project" class="close"><!-- Profile icon --></button> <!-- Border -->
+          <div class="overlay-heading">
+            <h1>Para criar um novo projeto: </h1>
+            <p>selecione ou crie uma nova pasta</p>
+          </div>
+            <button id="continue">Continuar</button>
         </div>
       </div>
 
       <div class="column left"> <!-- Two classes separated by spaces -->
         <div class="left_column_content">
           <div class="logo-heading"> <!-- Goal was to align these, so create a new/more-specific rule/class, and tell it to be inline -->
-            <img src="/assets/design/icon_heading.svg" alt="logo" class="heading-image">
+            <img src="/assets/design/icon_heading.png" alt="logo" class="heading-image">
             <h1 class="column_heading">ultiverso</h1> <!-- M removed for icon -->
           </div>
           <h2>Design, vídeo, áudio... seja lá o que for...</h2>
@@ -41,19 +52,19 @@
       <div class="column right"> <!-- More readable, can apply styles to both columns, or single columns -->
         <div class="right_column_content">
           <h3>Projetos</h3>
-          <button>Criar</button>       <!-- Blue background, white font, no borders -->
-          <button>Abrir</button>       <!-- Empty background, blue font, blue borders -->
+          <button id="create" class="entry">Criar</button>       <!-- Blue background, white font, no borders -->
+          <button id="open"class="entry">Abrir</button>       <!-- Empty background, blue font, blue borders -->
 
             <div id="dropdown-button" class="dropdown"> <!-- By doing this, they stack together in another way -->
-              <button class="recentes">RECENTES</button>    <!-- Dropdown menu: Blue background, white font, no border // rounded (top/down left) -->
-              <button id="dropdown-icon" class="icon">∨<!-- Arrow icon --></button>            <!-- Arrow side / Arrow down, Left gray border, rounded (top/down right) -->
+                <button class="recentes entry">Recentes</button>    <!-- Dropdown menu: Blue background, white font, no border // rounded (top/down left) -->
+                <button id="dropdown-icon" class="icon">∨<!-- Arrow icon --></button>            <!-- Arrow side / Arrow down, Left gray border, rounded (top/down right) -->
               <!-- Interactive dropdown -->
+               <ul id="dropdown-menu">
+                <li id="item1-id">item1</li>
+                <li id="item2-id">item2</li>
+                <li id="item3-id">item3</li>
+              </ul>
             </div>
-            <ul id="dropdown-menu">
-              <li>item1</li>
-              <li>item2</li>
-              <li>item3</li>
-            </ul>
           
          </div>
          <button class="profile" id="profile"><!-- Profile icon --></button> <!-- Border -->
@@ -63,6 +74,7 @@
 
       
      </div>
+     <script src="/src/js/renderer.js"></script>
      <script src="/src/js/ui.js"></script>
   </body>
 </html>

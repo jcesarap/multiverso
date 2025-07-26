@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="/src/css/history.css">
     </head>
 
-    <body>
+    <body data-page="history">
         <!--                UPPER BAR       -->
         <div id="top">
             <div class="right">
@@ -18,14 +18,22 @@
             </div>
         </div>
 
+        <div id="delete-dialog">
+            <p>TEM CERTEZA QUE QUER<br>EXCLUIR ESSA VERSÃO DO PASSADO?</p>
+            <div class="delete-buttons">
+                <button id="cancel-delete" class="confirm-delete">CANCELAR</button>
+                <button id="confirm" class="cancel">CONFIRMAR</button>
+            </div>
+        </div>
+
 
         <!--                LOWER BAR       -->
         <div id="bottom">
             <p>Salvo pela última vez hoje às 11:30 - por chiquim_das_panela</p>
             <div class="right">
                 <button id="delete">DELETAR</button>
-                <button id="edit">EDITAR</button>
-                <button>VOLTAR NO TEMPO</button>
+                <!-- <button id="edit">EDITAR</button> -->
+                <button id="revert">VOLTAR NO TEMPO</button>
             </div>
         </div>
 
@@ -37,8 +45,6 @@
             <!--        LEFT COLUMNS        -->
             <div class="column left">
                 <div class="edit-add">
-                    <button id="editar">Editar</button>
-                    <button id="add"></button> <!-- Add Button -->
                 </div>
                 <ul class="versions">
                     <li>
@@ -68,7 +74,7 @@
             </div>
          </div>
 
-
+        <script src="/src/js/renderer.js"></script>
         <script src="/src/js/ui.js"></script>
     </body>
 </html>

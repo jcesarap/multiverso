@@ -8,12 +8,12 @@
         <link rel="stylesheet" href="/src/css/edit.css">
     </head>
 
-    <body>
+    <body data-page="edit">
         <!-- OVERLAY -->
          <div id="delete-dialog">
             <p>TEM CERTEZA QUE QUER<br>EXCLUIR ESSA VERSÃO?</p>
             <div class="delete-buttons">
-                <button id="cancel" class="confirm-delete">CANCELAR</button>
+                <button id="cancel-delete" class="confirm-delete">CANCELAR</button>
                 <button id="confirm" class="cancel">CONFIRMAR</button>
             </div>
         </div>
@@ -22,7 +22,7 @@
         <!--                TOP             -->
         <div id="top">
             <div class="right">
-                <h2>Filmagens de drone</h2>
+                <h2>Filmagens de drone / Preto e branco</h2>
                 <h1 id="header">EDITAR VERSÃO</h1>
             </div>
         </div>
@@ -34,12 +34,13 @@
                 <input type="description" id="description" placeholder="Descreva o progresso">
                 <div class="buttons">
                     <button id="delete">EXCLUIR</button>
-                    <button>CANCELAR</button>
+                    <button id="cancel">CANCELAR</button>
                     <button id="save">SALVAR</button>
                 </div>
             </div>
         </div>
         
+        <script src="/src/js/renderer.js"></script>
         <script src="/src/js/ui.js"></script>
     </body>
 </html>
