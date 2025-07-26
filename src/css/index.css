@@ -178,7 +178,7 @@ img {
 #dropdown-menu {
     position: absolute;
     list-style: none;
-    margin-top: 5rem;
+    margin-top: 6rem;
     margin-left: -3rem;
     background-color: var(--white);
     padding: 1rem 3rem 0.5rem 3rem;

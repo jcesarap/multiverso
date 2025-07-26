@@ -58,7 +58,7 @@ function Home() {
         window.location.href = 'index.html';
     })
     addButton.addEventListener('click', () => {
-        window.location.href = 'new-version.html';
+        window.location.href = 'new-branch.html';
     })
     editButton.addEventListener('click', () => {
         window.location.href = 'edit.html';
