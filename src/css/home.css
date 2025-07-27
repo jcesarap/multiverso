@@ -1,20 +1,23 @@
 /* Pseudo-class */
-:root { /* Make available throughout document */
-  /* Custom properties */
-  --background-color: #1E1E1E;
-  --blue: #1976D2;
-  --white: #fffdfc;
-  --grayed_text: #b5b5b5;
+:root {
+    /* Make available throughout document */
+    /* Custom properties */
+    --background-color: #1E1E1E;
+    --blue: #1976D2;
+    --white: #fffdfc;
+    --grayed_text: #b5b5b5;
 }
 
 * {}
 
 /* Selecting elements */
-html, body { 
+html,
+body {
     font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     height: 100%;
     width: 100%;
-    margin: 0; /* Otherwise it does get truly fullscreen */
+    margin: 0;
+    /* Otherwise it does get truly fullscreen */
     background-color: var(--background-color);
 }
 
@@ -55,6 +58,11 @@ div .left {
     color: var(--grayed_text);
 }
 
+h1 .left {
+    position: relative;
+    z-index: 5;
+}
+
 div .right {
     /* Where */
     position: fixed;
@@ -88,9 +96,13 @@ div .right {
 /*                                   */
 
 .container {
-    display: flex; /* To apply columns/rows to children */
-    width: 100%; /* Make the container encompass everything */
-    min-height: 100%; /* In regards to the size of the html/body element */;
+    display: flex;
+    /* To apply columns/rows to children */
+    width: 100%;
+    /* Make the container encompass everything */
+    min-height: 100%;
+    /* In regards to the size of the html/body element */
+    ;
     /* Use vh for viewport units */
 }
 
@@ -130,6 +142,53 @@ div .right {
     font-size: 1rem;
 }
 
+#editar:hover {
+    filter: brightness(65%);
+    transition: filter 0.2s ease;
+}
+
+
+.column.left .edit-add {
+    position: fixed;
+    top: 11rem;
+    left: 45rem;
+    padding-bottom: 1rem;
+}
+
+.column.left {
+    position: relative;
+    padding: 10rem;
+    margin-left: 0;
+    left: 1rem;
+    width: 40rem;
+    height: 10rem;
+}
+
+.column.left .versions {
+    position: absolute;
+    top: 1rem;
+    left: 3rem;
+    height: 25rem;
+    width: 50rem;
+    padding-top: 0;
+    margin-top: 1rem;
+    /* MAKE ELEMENT SCROLL, INSTEAD OF WHOLE PAGE */
+    overflow: auto;
+}
+
+.versions li {
+    padding-bottom: 3rem;
+}
+
+.left .versions li.selected {
+    color: var(--blue);
+}
+
+.left .versions li:hover {
+    filter: brightness(70%);
+    transition: filter 0.2s ease;
+}
+
 /* 
 
 
@@ -139,34 +198,32 @@ div .right {
 */
 
 
-.left .versions li.selected {
-    color: var(--blue);
-}
-
 .column.right {
     /* Where */
     top: 15rem;
-    right: 10rem;
+    right: 5rem;
+    height: 30rem;
+    width: 25rem;
     /* Style */
+    text-align: right;
+    padding-right: 5rem;
     display: block;
     font-size: 2rem;
+    overflow: auto;
 }
 
-.column.left .edit-add {
-    position: fixed;
-    top: 13rem;
-    left: 35rem;
+
+/* Folders — all <p> elements inside .column.right */
+.column.right p {
+    color: var(--white);
+    text-align: center;
 }
 
-.column.left .versions {
-    position: fixed;
-    top: 19rem;
-    left: 15rem;
+/* Files — all <li> elements inside .column.right */
+.column.right li {
+    color: var(--grayed_text);
 }
 
-.versions li {
-    padding-bottom: 3rem;
-}
 
 /* 
 
@@ -193,11 +250,16 @@ div .right {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 10px;   
+    padding: 10px;
 }
 
 #bottom .right button {
     width: 8vw;
     height: 3vw;
     color: var(--white);
+}
+
+button:hover {
+    filter: brightness(85%);
+    transition: filter 0.2s ease;
 }

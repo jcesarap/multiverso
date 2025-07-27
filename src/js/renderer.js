@@ -11,7 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
         newVersion();
     } else if (page === 'history') {
         History();
+    } else if (page === 'save') {
+        Save();
     }
+
 });
 
 function Index() {
@@ -67,7 +70,7 @@ function Home() {
         window.location.href = 'history.html';
     })
     saveButton.addEventListener('click', () => {
-        alert("Documento salvo");
+        window.location.href = 'save.html';
     })
 }
 
@@ -123,6 +126,22 @@ function History() {
         window.location.href = 'home.html';
     })
     deleteButton.addEventListener('click', () => {
+        window.location.href = 'home.html';
+    })
+}
+
+function Save() {
+    const cancelButton = document.getElementById('cancel');
+    const saveButton = document.getElementById('save');
+    if (!cancelButton || !saveButton) {
+        alert("Element on renderer.js doesn't exit");
+        return;
+    }
+
+    cancelButton.addEventListener('click', () => {
+        window.location.href = 'home.html';
+    })
+    saveButton.addEventListener('click', () => {
         window.location.href = 'home.html';
     })
 }

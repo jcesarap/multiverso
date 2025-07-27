@@ -1,22 +1,25 @@
 /* Pseudo-class */
-:root { /* Make available throughout document */
-  /* Custom properties */
-  --background-color: #1E1E1E;
-  --blue: #1976D2;
-  --white: #fffdfc;
-  --grayed_text: #b5b5b5;
-  --darkblue: #030019;
-  --red: #FF0004;
+:root {
+    /* Make available throughout document */
+    /* Custom properties */
+    --background-color: #1E1E1E;
+    --blue: #1976D2;
+    --white: #fffdfc;
+    --grayed_text: #b5b5b5;
+    --darkblue: #030019;
+    --red: #FF0004;
 }
 
 * {}
 
 /* Selecting elements */
-html, body { 
+html,
+body {
     font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     height: 100%;
     width: 100%;
-    margin: 0; /* Otherwise it does get truly fullscreen */
+    margin: 0;
+    /* Otherwise it does get truly fullscreen */
     background-color: var(--darkblue);
 }
 
@@ -81,9 +84,12 @@ div .right {
 
 .mid-box {
     display: flex;
-    justify-content: center; /* horizontal centering */
-    align-items: center;     /* vertical centering */
-    height: 100vh;           /* take full viewport height */
+    justify-content: center;
+    /* horizontal centering */
+    align-items: center;
+    /* vertical centering */
+    height: 100vh;
+    /* take full viewport height */
 }
 
 .mid-content input {
@@ -139,59 +145,7 @@ div .right {
     color: var(--red);
 }
 
-/* 
-
-        DELETE DIALOG
-
-*/
-
-#delete-dialog {
-  /* RULE */
-  display: none;
-}
-
-#delete-dialog.show {
-  background: var(--white);
-  border-radius: 1.5rem;
-  padding: 2.5rem;
-  width: 400px;
-  text-align: center;
-  color: var(--red);
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin: auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#delete-dialog .delete-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#delete-dialog .confirm-delete {
-  background: none;
-  color: var(--grayed_text);
-  font-size: 1rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-}
-
-#delete-dialog .cancel {
-  background: var(--red);
-  color: var(--white);
-  font-size: 0.85rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-}
-
 button:hover {
-  filter: brightness(85%);
-  transition: filter 0.2s ease;
+    filter: brightness(85%);
+    transition: filter 0.2s ease;
 }

@@ -24,6 +24,7 @@
     "electron": "^36.5.0"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1"
+    "electron-squirrel-startup": "^1.0.1",
+    "live-server": "^1.2.2"
   }
 }

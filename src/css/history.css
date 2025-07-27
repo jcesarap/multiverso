@@ -1,22 +1,25 @@
 /* Pseudo-class */
-:root { /* Make available throughout document */
-  /* Custom properties */
-  --background-color: #1E1E1E;
-  --blue: #1976D2;
-  --white: #fffdfc;
-  --grayed_text: #b5b5b5;
-  --darkblue: #030019;
-  --red: #FF0004;
+:root {
+    /* Make available throughout document */
+    /* Custom properties */
+    --background-color: #1E1E1E;
+    --blue: #1976D2;
+    --white: #fffdfc;
+    --grayed_text: #b5b5b5;
+    --darkblue: #030019;
+    --red: #FF0004;
 }
 
 * {}
 
 /* Selecting elements */
-html, body { 
+html,
+body {
     font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     height: 100%;
     width: 100%;
-    margin: 0; /* Otherwise it does get truly fullscreen */
+    margin: 0;
+    /* Otherwise it does get truly fullscreen */
     background-color: var(--darkblue);
 }
 
@@ -47,15 +50,6 @@ li {
 
 
 */
-
-div .left {
-    /* Where */
-    position: fixed;
-    top: 2rem;
-    left: 5rem;
-    /* Style */
-    color: var(--grayed_text);
-}
 
 div .right {
     /* Where */
@@ -90,9 +84,13 @@ div .right {
 /*                                   */
 
 .container {
-    display: flex; /* To apply columns/rows to children */
-    width: 100%; /* Make the container encompass everything */
-    min-height: 100%; /* In regards to the size of the html/body element */;
+    display: flex;
+    /* To apply columns/rows to children */
+    width: 100%;
+    /* Make the container encompass everything */
+    min-height: 100%;
+    /* In regards to the size of the html/body element */
+    ;
     /* Use vh for viewport units */
 }
 
@@ -104,6 +102,14 @@ div .right {
 
 */
 
+div .left {
+    /* Where */
+    position: fixed;
+    top: 2rem;
+    left: 5rem;
+    /* Style */
+    color: var(--grayed_text);
+}
 
 #add {
     border-radius: 50%;
@@ -118,50 +124,10 @@ div .right {
 
 .column.left {
     /* Where */
+    display: block;
     top: 19rem;
     left: 10rem;
     /* Style */
-    display: block;
-    font-size: 2rem;
-}
-
-#editar {
-    /* Style */
-    background-color: transparent;
-    color: var(--white);
-    font-size: 1rem;
-}
-
-/* 
-
-
-        COLUMN RIGHT
-
-
-*/
-
-
-.versions li.selected {
-    color: var(--blue);
-}
-
-.versions p.selected {
-    color: var(--blue);
-}
-
-.versions li.selected {
-    color: var(--blue);
-    border-left: 2rem solid var(--blue); /* Blue border on the left */
-    padding-left: 4rem; /* Optional: space between text and border */
-}
-
-
-.column.right {
-    /* Where */
-    top: 15rem;
-    right: 10rem;
-    /* Style */
-    display: block;
     font-size: 2rem;
 }
 
@@ -173,17 +139,86 @@ div .right {
 
 .column.left .versions {
     position: fixed;
-    top: 18rem;
-    left: 15rem;
+    top: 13rem;
+    left: 10rem;
 }
 
+
+#editar {
+    /* Style */
+    background-color: transparent;
+    color: var(--white);
+    font-size: 1rem;
+}
+
+ul.versions {
+    /* WHERE */
+    position: absolute;
+    /* Style */
+    overflow: auto;
+    width: 50rem;
+    height: 30rem;
+}
+
+.versions li.selected {
+    color: var(--blue);
+    border-left: 1rem solid var(--blue);
+    border-radius: 1rem;
+}
+
+.versions p.selected {
+    color: var(--blue);
+}
+
+.versions li.selected {
+    color: var(--blue);
+    /* Blue border on the left */
+    padding-left: 1rem;
+    /* Optional: space between text and border */
+}
+
+
 .versions li {
-    padding-bottom: 0;
+    margin-bottom: 4rem;
 }
 
 .versions p {
-    padding-bottom: 2rem;
+    padding-bottom: 0;
     padding-left: 3rem;
+}
+
+/* 
+
+
+        COLUMN RIGHT
+
+
+*/
+
+/* Folders — all <p> elements inside .column.right */
+.column.right p {
+    color: var(--white);
+    text-align: center;
+}
+
+/* Files — all <li> elements inside .column.right */
+.column.right li {
+    color: var(--grayed_text);
+}
+
+
+.column.right {
+    /* Where */
+    top: 15rem;
+    right: 5rem;
+    height: 30rem;
+    width: 25rem;
+    /* Style */
+    text-align: right;
+    padding-right: 5rem;
+    display: block;
+    font-size: 2rem;
+    overflow: auto;
 }
 
 /* 
@@ -211,7 +246,7 @@ div .right {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 10px;   
+    padding: 10px;
 }
 
 #bottom .right button {
@@ -239,47 +274,53 @@ div .right {
 */
 
 #delete-dialog {
-  /* RULE */
-  display: none;
+    /* RULE */
+    display: none;
 }
 
 #delete-dialog.show {
-  background: var(--white);
-  border-radius: 1.5rem;
-  padding: 2.5rem;
-  width: 400px;
-  text-align: center;
-  color: var(--red);
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin: auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    background: var(--white);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    width: 400px;
+    text-align: center;
+    color: var(--red);
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
 }
 
 #delete-dialog .delete-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #delete-dialog .confirm-delete {
-  background: none;
-  color: var(--grayed_text);
-  font-size: 1rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
+    background: none;
+    color: var(--grayed_text);
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
 }
 
 #delete-dialog .cancel {
-  background: var(--red);
-  color: var(--white);
-  font-size: 0.85rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
+    background: var(--red);
+    color: var(--white);
+    font-size: 0.85rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+}
+
+button:hover {
+    filter: brightness(85%);
+    transition: filter 0.2s ease;
 }

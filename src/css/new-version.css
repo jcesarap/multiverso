@@ -138,3 +138,8 @@ div .right {
 #delete {
     color: var(--red);
 }
+
+button:hover {
+  filter: brightness(85%);
+  transition: filter 0.2s ease;
+}

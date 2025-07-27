@@ -1,20 +1,23 @@
 /* Pseudo-class */
-:root { /* Make available throughout document */
-  /* Custom properties */
-  --background-color: #1E1E1E;
-  --blue: #1976D2;
-  --white: #fffdfc;
-  --grayed_text: #b5b5b5;
+:root {
+    /* Make available throughout document */
+    /* Custom properties */
+    --background-color: #1E1E1E;
+    --blue: #1976D2;
+    --white: #fffdfc;
+    --grayed_text: #b5b5b5;
 }
 
 * {}
 
 /* Selecting elements */
-html, body { 
+html,
+body {
     font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     height: 100%;
     width: 100%;
-    margin: 0; /* Otherwise it does get truly fullscreen */
+    margin: 0;
+    /* Otherwise it does get truly fullscreen */
 }
 
 h1 {
@@ -45,9 +48,13 @@ img {
 /* ===================================================== */
 
 .container {
-    display: flex; /* To apply columns/rows to children */
-    width: 100%; /* Make the container encompass everything */
-    min-height: 100%; /* In regards to the size of the html/body element */;
+    display: flex;
+    /* To apply columns/rows to children */
+    width: 100%;
+    /* Make the container encompass everything */
+    min-height: 100%;
+    /* In regards to the size of the html/body element */
+    ;
     /* Use vh for viewport units */
 }
 
@@ -72,7 +79,8 @@ img {
     /* Remaining space, fixed */
     flex-basis: auto;
     flex-grow: 1;
-    padding: 1rem; /* Root font size */
+    padding: 1rem;
+    /* Root font size */
 
     position: relative;
 }
@@ -113,7 +121,7 @@ img {
     position: absolute;
     top: 1rem;
     right: -8rem;
-    
+
     background-image: url('/assets/design/close.png');
     background-color: transparent;
     background-repeat: no-repeat;
@@ -125,7 +133,7 @@ img {
     bottom: 1rem;
     right: 20rem;
     border-radius: 10rem;
-    color:#FFFFFF;
+    color: #FFFFFF;
     background-color: #1976D2;
     height: 4rem;
     display: flex;
@@ -133,8 +141,8 @@ img {
 }
 
 .logo-heading {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .dropdown {
@@ -145,30 +153,38 @@ img {
     position: fixed;
     width: 100vw;
     height: 100vh;
-    display: flex; /* To apply columns/rows to children */
+    display: flex;
+    /* To apply columns/rows to children */
     align-items: center;
     justify-content: center;
     z-index: 1;
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
 }
 
-#profile-overlay.show { /* Styles elements with #id and .class         (. is like + on cc) */
-  display: flex; /* this more specific rule, applies but this, to the former ones */
+#profile-overlay.show {
+    /* Styles elements with #id and .class         (. is like + on cc) */
+    display: flex;
+    /* this more specific rule, applies but this, to the former ones */
 }
 
 #new-project-overlay {
     position: fixed;
     width: 100vw;
     height: 100vh;
-    display: flex; /* To apply columns/rows to children */
+    display: flex;
+    /* To apply columns/rows to children */
     align-items: center;
     justify-content: center;
     z-index: 1;
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
 }
 
-#new-project-overlay.show { /* Styles elements with #id and .class         (. is like + on cc) */
-  display: flex; /* this more specific rule, applies but this, to the former ones */
+#new-project-overlay.show {
+    /* Styles elements with #id and .class         (. is like + on cc) */
+    display: flex;
+    /* this more specific rule, applies but this, to the former ones */
 }
 
 #new-project-overlay p {
@@ -176,19 +192,28 @@ img {
 }
 
 #dropdown-menu {
+    /* WHERE */
     position: absolute;
     list-style: none;
     margin-top: 6rem;
     margin-left: -3rem;
+    /* STYLE */
     background-color: var(--white);
     padding: 1rem 3rem 0.5rem 3rem;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     display: none;
     width: 10vw;
+    /* NEW for scroll */
+    max-height: 9rem;
+    /* Adjust height as needed */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    overflow-x: hidden;
+    /* Hide horizontal scroll if any */
 }
 
 #dropdown-menu li {
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
 }
 
 #dropdown-menu.show {
@@ -202,7 +227,7 @@ img {
     gap: 1rem;
     background-color: var(--background-color);
     padding: 4rem 4rem 8rem 4rem;
-    
+
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     border-radius: 1rem;
 
@@ -212,7 +237,8 @@ img {
 .overlay-heading {
     display: flex;
     flex-direction: column;
-    gap: 0rem; /* Only applies to flex containers */
+    gap: 0rem;
+    /* Only applies to flex containers */
 }
 
 .recentes {
@@ -240,7 +266,8 @@ img {
     margin-bottom: 1rem;
 }
 
-.left_column_content h2, p {
+.left_column_content h2,
+p {
     padding-left: 2rem;
     max-width: 25rem;
 }
@@ -290,13 +317,14 @@ img {
     height: 2vw;
 }
 
-.right_column_content > button:not(.dropdown) { /* > = children of = (button);         :not() = except */
+.right_column_content>button:not(.dropdown) {
+    /* > = children of = (button);         :not() = except */
     width: 15vw;
     height: 4vw;
     font-size: 1.4rem;
 }
 
-.column.right > :not(h3) {
+.column.right> :not(h3) {
     align-items: center;
 }
 
@@ -310,4 +338,13 @@ img {
 
 button.icon {
     padding: 0.3rem 1rem 0.3rem 1rem;
+}
+
+button:hover {
+    filter: brightness(85%);
+    transition: filter 0.2s ease;
+}
+
+#dropdown-menu li:hover {
+    color: var(--grayed_text);
 }
