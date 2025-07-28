@@ -4,7 +4,9 @@
   <head> <!-- Metadata -->
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <!-- Responsive design -->
-    <link rel="stylesheet" href="./src/css/index.css">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <link rel="stylesheet" href="/src/css/index.css">
   </head>
 
   <body data-page="index">
@@ -37,7 +39,7 @@
       <div class="column left"> <!-- Two classes separated by spaces -->
         <div class="left_column_content">
           <div class="logo-heading"> <!-- Goal was to align these, so create a new/more-specific rule/class, and tell it to be inline -->
-            <img src="./assets/design/icon_heading.png" alt="logo" class="heading-image">
+            <img src="/assets/design/icon_heading.png" alt="logo" class="heading-image">
             <h1 class="column_heading">ultiverso</h1> <!-- M removed for icon -->
           </div>
           <h2>Design, vídeo, áudio... seja lá o que for...</h2>
@@ -75,7 +77,7 @@
 
       
      </div>
-     <script src="./src/js/renderer.js"></script>
-     <script src="./src/js/ui.js"></script>
+     <script src="/src/js/renderer.js"></script>
+     <script src="/src/js/ui.js"></script>
   </body>
 </html>
