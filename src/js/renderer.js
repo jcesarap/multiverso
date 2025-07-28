@@ -143,6 +143,11 @@ function newVersion() {
 }
 
 function History() {
+    // Renderer
+    const dirName = document.querySelector('.right h2');
+    let savedPath = localStorage.getItem('selectedPath');                 // Import
+    dirName.innerText = savedPath;
+
     const closeButton = document.getElementById('button-close');
     const revertButton = document.getElementById('revert');
     const deleteButton = document.getElementById('confirm');
