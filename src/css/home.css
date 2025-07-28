@@ -8,7 +8,20 @@
     --grayed_text: #b5b5b5;
 }
 
-* {}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+/* Remove the background of the scrollbar track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+/* Keep the thumb visible and styled */
+::-webkit-scrollbar-thumb {
+  background-color: var(--blue); /* or any color you want */
+  border-radius: 4px;
+}
 
 /* Selecting elements */
 html,
@@ -87,7 +100,7 @@ div .right {
     width: 4vw;
     height: 4vh;
     /* Style */
-    background-image: url('/assets/design/close.png');
+    background-image: url('../../assets/design/close.png');
     background-color: transparent;
     background-repeat: no-repeat;
     background-size: contain;
@@ -117,13 +130,15 @@ div .right {
 
 #add {
     border-radius: 50%;
-    background-image: url('/assets/design/add.png');
+    background-image: url('../../assets/design/add.png');
     height: 8rem;
     width: 8rem;
     background-position: center;
     background-color: transparent;
     background-repeat: no-repeat;
     background-size: contain;
+    margin-top: 1rem;
+    
 }
 
 .column.left {
@@ -153,6 +168,11 @@ div .right {
     top: 11rem;
     left: 45rem;
     padding-bottom: 1rem;
+    align-items: center;
+
+    /* Fix: make layout flex row */
+    display: flex;
+    gap: 1rem; /* spacing between Editar and Add */
 }
 
 .column.left {

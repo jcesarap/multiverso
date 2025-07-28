@@ -10,6 +10,7 @@ const createWindow = () => {
   const win = new BrowserWindow({ // Stores reference to new window to win
     width: 800,
     height: 600,
+    menu: null,
   })
 
   // Populate the instance

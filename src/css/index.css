@@ -8,7 +8,19 @@
     --grayed_text: #b5b5b5;
 }
 
-* {}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+/* Remove the background of the scrollbar track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+/* Keep the thumb visible and styled */
+::-webkit-scrollbar-thumb {
+  background-color: var(--blue); /* or any color you want */
+  border-radius: 4px;
+}
 
 /* Selecting elements */
 html,
@@ -110,7 +122,7 @@ img {
     bottom: 1rem;
     right: 1rem;
     border-radius: 50%;
-    background-image: url('/assets/design/avatar.png');
+    background-image: url('../../assets/design/avatar.png');
     height: 2rem;
     width: 2rem;
     background-size: cover;
@@ -122,7 +134,7 @@ img {
     top: 1rem;
     right: -8rem;
 
-    background-image: url('/assets/design/close.png');
+    background-image: url('../../assets/design/close.png');
     background-color: transparent;
     background-repeat: no-repeat;
     background-size: contain;

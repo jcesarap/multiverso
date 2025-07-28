@@ -10,7 +10,19 @@
     --red: #FF0004;
 }
 
-* {}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+/* Remove the background of the scrollbar track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+/* Keep the thumb visible and styled */
+::-webkit-scrollbar-thumb {
+  background-color: var(--blue); /* or any color you want */
+  border-radius: 4px;
+}
 
 /* Selecting elements */
 html,
