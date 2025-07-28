@@ -10,8 +10,7 @@ const createWindow = () => {
   const win = new BrowserWindow({ // Stores reference to new window to win
     width: 800,
     height: 600,
-    resizable: false,
-    maximizable: false
+    menu: null
   })
 
   // Populate the instance
@@ -24,11 +23,7 @@ const createWindow = () => {
 // .then() is a method used with Promises - when the thing I’m waiting for finishes, then do this next thing
 // it could be just app.whenReady().then(createWindow)... but then you couldn't do the following, or add more functions (this acts as a main())
 app.whenReady().then(() => {
-  try {
-    createWindow()
-  } catch (e) {
-    console.error('Failed to create window:', e)
-  }
+  createWindow()
 })
 
 // Continue reading from:
