@@ -9,4 +9,6 @@ contextBridge.exposeInMainWorld('api', { // To object named versions
     runCommand: (cmd) => ipcRenderer.invoke('run-command', cmd),
     openFile: () => ipcRenderer.invoke('dialog:openFile'),
     basename: (fullPath) => path.basename(fullPath),
+    openExternal: (url) => ipcRenderer.send('open-external', url),
+    checkGit: () => ipcRenderer.invoke('check-git'),
 }) 

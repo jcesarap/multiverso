@@ -18,6 +18,19 @@ async function setupCLI() {
     })
 }
 
+async function checkForGit() {
+    window.api.checkGit().then((result) => {
+        if (!result) {
+            console.log('Git is installed:', result);
+        } else {
+            const gitReminder = document.getElementById('git-overlay');
+            gitReminder.addEventListener('click', () => {
+                commandPrompt.classList.toggle('show');
+            })
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // Load attribute in js
     const page = document.body.dataset.page;
@@ -48,7 +61,9 @@ function Index() {
     // Recentes
     //      Define path; Go home
     // const recentButton = document.querySelector("dropdown-menu");
-    if (!createButton || !openButton /*|| !recentButton*/) {
+    const link = document.getElementById('baixar-git');
+
+    if (!link || !createButton || !openButton /*|| !recentButton*/) {
         alert("Element on renderer.js doesn't exit");
         return;
     }
@@ -56,6 +71,11 @@ function Index() {
     createButton.addEventListener('click', () => {
         window.location.href = 'home.html' // gets window object, .location obj/var, then href obj/var, and replaces it
     })
+
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.api.openExternal('https://github.com/git-for-windows/git/releases/download/v2.50.1.windows.1/Git-2.50.1-64-bit.exe');
+    });
 
     openButton.addEventListener('click', async () => {
         const result = await window.api.openFile();
