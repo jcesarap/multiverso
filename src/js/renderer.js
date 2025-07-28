@@ -1,7 +1,28 @@
+// const versionTest = document.getElementById('output')
+// versionTest.innerText = `This app is using Chrome (v${versions.chrome()}), Node.js (v${versions.node()}), and Electron (v${versions.electron()})`
+
+async function setupCLI() {
+    const input = document.querySelector('#command input'); // Selects the first element that matches the css selector between quotes
+    const output = document.querySelector('#output');
+
+    input.addEventListener('keydown', async (event) => { // Needs be async, as it evokes shell, which is async
+        if (event.key === 'Enter') {
+            const cmd = input.value.trim(); // Gets value inside input field
+            try {
+                const result = await window.api.runCommand(cmd); // Import 
+                output.innerText = result;
+            } catch (err) {
+                output.innerText = `Error: ${err.message}`;
+            }
+        }
+    })
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // Load attribute in js
     const page = document.body.dataset.page;
     if (page === 'index') {
+        setupCLI();
         Index();
     } else if (page === 'home') {
         Home();
@@ -36,17 +57,28 @@ function Index() {
         window.location.href = 'home.html' // gets window object, .location obj/var, then href obj/var, and replaces it
     })
 
-    openButton.addEventListener('click', () => {
+    openButton.addEventListener('click', async () => {
+        const result = await window.api.openFile();
+        if (result.canceled) {
+            console.log("Dir picker cancelled"); // Bash usually gets errors for empty conditions, maybe here is the same
+        } else {
+            localStorage.setItem('selectedPath', result.filePaths[0]);      // Export
+        }
         window.location.href = 'home.html'
     })
 
     // recentButton.addEventListener('click', () => {
     //     window.location.href = 'home.html'
     // })
-
 }
 
 function Home() {
+    // Renderer
+    const dirName = document.querySelector('.right h2');
+    let savedPath = localStorage.getItem('selectedPath');                 // Import
+    dirName.innerText = savedPath;
+
+    // Interactivity
     const closeButton = document.getElementById('button-close');
     const addButton = document.getElementById('add');
     const editButton = document.getElementById('editar');

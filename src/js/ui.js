@@ -2,11 +2,39 @@
 
 // Ensure the DOM is fully loaded before running scripts
 document.addEventListener("DOMContentLoaded", () => {
-    profileMenu();
-    dropdownMenu();
-    versionSelection();
-    confirmDeletion();
+    const page = document.body.dataset.page;
+    if (page === 'index') {
+        consoleMenu();
+        profileMenu();
+        dropdownMenu();
+    } else if (page === 'home') {
+        versionSelection();
+        confirmDeletion();
+    } else if (page === 'edit') {
+        versionSelection();
+        confirmDeletion();
+    } else if (page === 'newVersion') {
+        newVersion();
+    } else if (page === 'history') {
+        versionSelection();
+        confirmDeletion();
+    } else if (page === 'save') {
+        Save();
+    }
+
 });
+
+function consoleMenu() {
+    const consoleButton = document.getElementById('reminder');
+    const commandPrompt = document.getElementById('command');
+    if (!consoleButton || !commandPrompt) {
+        alert("Missing elements");
+        return;
+    }
+    consoleButton.addEventListener('click', () => {
+        commandPrompt.classList.toggle('show');
+    })
+}
 
 function profileMenu() {
     // CREATE

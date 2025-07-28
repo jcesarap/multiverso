@@ -1,4 +1,7 @@
-const { app, BrowserWindow } = require('electron')
+
+const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+const path = require('node:path'); // Get path module from node, assign to path (object)
+const { exec } = require('child_process');
 // Code is read right to left, inside out!!!
 //      Imports electron module/framework
 //      Assigns to the left
@@ -11,6 +14,10 @@ const createWindow = () => {
     width: 800,
     height: 600,
     menu: null,
+    webPreferences: { // Object
+      // Property
+      preload: path.join(__dirname, 'preload.js') // gets __dir of this .js, joins with path in cross-platform safe way
+    }
   })
 
   // Populate the instance
@@ -23,8 +30,29 @@ const createWindow = () => {
 // .then() is a method used with Promises - when the thing I’m waiting for finishes, then do this next thing
 // it could be just app.whenReady().then(createWindow)... but then you couldn't do the following, or add more functions (this acts as a main())
 app.whenReady().then(() => {
-  createWindow()
-})
+  ipcMain.handle('run-command', async (_event, command) => { // When renderer sends "run-command" message, this function is called
+    return new Promise((resolve) => { // Declare new promise, as shell commands are asynchronous
+      exec(command, (error, stdout, stderr) => { // exec, command (objects which return error (to run(js)), output and error on command (system))
+        if (error) { // If error exists, ouput error message
+          resolve(`Error: ${error.message}`);
+        } else if (stderr) { // Same here
+          resolve(`Stderr: ${stderr}`);
+        } else {
+          resolve(stdout); // Just returns the output - if an error isn't returned before
+        }
+      });
+    });
+  });
+
+  ipcMain.handle('dialog:openFile', async () => {
+    const result = await dialog.showOpenDialog({
+      properties: ['openDirectory']
+    });
+    return result;
+  });
+
+  createWindow();
+});
 
 // Continue reading from:
 // https://www.electronjs.org/docs/latest/tutorial/tutorial-first-app

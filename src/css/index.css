@@ -33,8 +33,12 @@ body {
 }
 
 h1 {
-    font-size: 4.5rem;
+    font-size: 5rem;
     font-weight: 300;
+    padding-right: 0;
+    margin-right: 0;
+    padding-left: 0;
+    margin-left: 0;
 }
 
 h2 {
@@ -115,6 +119,16 @@ img {
 .column_heading {
     text-align: center;
     padding-bottom: 2rem;
+    color: #0e35a8;
+    font-style: italic;
+    padding-left: -2rem;
+    margin-left: -1.5rem;
+    /* Background */
+    /* background: linear-gradient(to right, #ce22fe, #2b3ffc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent; */
 }
 
 .profile {
@@ -150,6 +164,19 @@ img {
     height: 4rem;
     display: flex;
     align-items: center;
+}
+
+#output {
+    background-color: #fffdfc;
+    padding: 1rem;
+}
+
+#command {
+    display: none;
+}
+
+#command.show {
+    display: inline;
 }
 
 .logo-heading {
@@ -359,4 +386,9 @@ button:hover {
 
 #dropdown-menu li:hover {
     color: var(--grayed_text);
+}
+
+.sub_column {
+    color: #494949;
+    padding-top: 1rem;
 }
