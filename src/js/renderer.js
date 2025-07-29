@@ -230,7 +230,7 @@ async function Index() {
             const dirPath = result.filePaths[0];
             await window.api.setWorkingDirectory(dirPath);
             localStorage.setItem('selectedPath', dirPath);
-
+            await window.api.ensureGitSetup();
             window.location.href = 'home.html'
         }
     })
@@ -253,11 +253,10 @@ async function Index() {
             const dirPath = result.filePaths[0];
             await window.api.setWorkingDirectory(dirPath);
             localStorage.setItem('selectedPath', dirPath);
-
+            await window.api.ensureGitSetup();
             window.location.href = 'home.html'
         }
     })
-
     // recentButton.addEventListener('click', () => {
     //     window.location.href = 'home.html'
     // })
@@ -300,6 +299,7 @@ function Home() {
 
 
 function Edit() {
+
     const deleteButton = document.getElementById('confirm');
     const cancelButton = document.getElementById('cancel');
     const saveButton = document.getElementById('save');
@@ -308,13 +308,44 @@ function Edit() {
         return;
     }
 
-    deleteButton.addEventListener('click', () => {
+    deleteButton.addEventListener('click', async () => {
+        let input = document.getElementById('title');
+        let branchTitle = input.value.trim();
+        if (!input) {
+            alert("Element on renderer.js doesn't exit");
+            return;
+        }
+        if (!branchTitle) {
+            alert('Nome da versão não pode estar vazio');
+            return;
+        }
+        let outputNewVersion = await window.api.deleteBranch(branchTitle);
+        console.log(outputNewVersion);
+        // console.log("You're on path: ");
         window.location.href = 'home.html';
     })
     cancelButton.addEventListener('click', () => {
         window.location.href = 'home.html';
     })
-    saveButton.addEventListener('click', () => {
+
+    saveButton.addEventListener('click', async () => {
+        let input = document.getElementById('title');
+        let branchTitle = input.value.trim();
+        if (!input) {
+            alert("Element on renderer.js doesn't exit");
+            return;
+        }
+        if (!branchTitle) {
+            alert('Nome da versão não pode estar vazio');
+            return;
+        }
+        let outputNewVersion = await window.api.renameBranch(branchTitle);
+        console.log(outputNewVersion);
+        // console.log("You're on path: ");
+        window.location.href = 'home.html';
+    })
+
+    cancelButton.addEventListener('click', () => {
         window.location.href = 'home.html';
     })
 }
@@ -349,19 +380,12 @@ function History() {
 function Save() {
     const cancelButton = document.getElementById('cancel');
     const saveButton = document.getElementById('save');
-
     if (!cancelButton || !saveButton) {
         alert("Element on renderer.js doesn't exit");
         return;
     }
 
-    saveButton.addEventListener('click', () => {
-        window.location.href = 'home.html';
-    })
-
-    cancelButton.addEventListener('click', () => {
-        window.location.href = 'home.html';
-    })
+    // console.log("You're on path: ");
 }
 
 
@@ -385,7 +409,7 @@ function newVersion() { // Add new branch
             alert('Nome da versão não pode estar vazio');
             return;
         }
-        const outputNewVersion = await window.api.addBranch(branchTitle);
+        let outputNewVersion = await window.api.addBranch(branchTitle);
         console.log(outputNewVersion);
         // console.log("You're on path: ");
         window.location.href = 'home.html';

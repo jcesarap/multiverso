@@ -19,4 +19,7 @@ contextBridge.exposeInMainWorld('api', { // To object named versions
     printDir: () => ipcRenderer.invoke('printDir'),
     switchBranchOnClick: (branchName) => ipcRenderer.invoke('switch-branch', branchName),
     addBranch: (branchTitle) => ipcRenderer.invoke('add-branch', branchTitle),
+    renameBranch: (newBranchTitle) => ipcRenderer.invoke('rename-branch', newBranchTitle),
+    deleteBranch: (newBranchTitle) => ipcRenderer.invoke('delete-branch', newBranchTitle),
+    ensureGitSetup: () => ipcRenderer.invoke('ensure-git-setup'),
 }) 

@@ -180,8 +180,8 @@ function versionSelection() {
                 description.classList.add("selected"); // Visually link description to selection
             }
             const branchName = li.textContent.trim();
+
             await window.api.switchBranchOnClick(branchName);
-            alert(`Você trocou os arquivos para a versão paralela ${branchName}`);
             printDirectory();
         });
     });

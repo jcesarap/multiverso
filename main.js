@@ -108,6 +108,41 @@ app.whenReady().then(() => {
         });
     });
 
+    ipcMain.handle('ensure-git-setup', async (_event) => {
+        return new Promise((resolve) => {
+            exec('git rev-parse --is-inside-work-tree', { cwd: currentWorkingDirectory }, (err1) => {
+                if (err1) {
+                    // Not a git repo, initialize it
+                    exec('git init', { cwd: currentWorkingDirectory }, (err2) => {
+                        if (err2) return resolve(false);
+                        proceedWithAddAndCommit();
+                    });
+                } else {
+                    proceedWithAddAndCommit();
+                }
+            });
+
+            function proceedWithAddAndCommit() {
+                exec('git add .', { cwd: currentWorkingDirectory }, (err3) => {
+                    if (err3) return resolve(false);
+
+                    // Check if any commits exist
+                    exec('git rev-parse HEAD', { cwd: currentWorkingDirectory }, (err4) => {
+                        if (err4) {
+                            // No commits, make initial commit
+                            exec('git commit -am "Estado Inicial"', { cwd: currentWorkingDirectory }, (err5) => {
+                                resolve(!err5); // true if commit succeeded
+                            });
+                        } else {
+                            // Repo already has commits, done
+                            resolve(true);
+                        }
+                    });
+                });
+            }
+        });
+    });
+
     ipcMain.handle('load-branches', async (_event) => {
         return new Promise((resolve, reject) => {
             exec(`git branch`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
@@ -138,21 +173,64 @@ app.whenReady().then(() => {
 
     ipcMain.handle('switch-branch', async (_event, branchName) => {
         return new Promise((resolve) => {
-            exec(`git checkout ${branchName}`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
-                if (error || stderr) {
-                    resolve({ success: false, error: stderr || error.message });
-                } else {
-                    resolve({ success: true, message: stdout.trim() });
+            // Check git status
+            exec('git status --porcelain', { cwd: currentWorkingDirectory }, (statusErr, statusStdout, statusStderr) => {
+                if (statusErr || statusStderr) {
+                    // If error checking status, fail gracefully
+                    resolve({ success: false, error: statusStderr || statusErr.message });
+                    return;
                 }
+
+                // Check if working directory is clean
+                // `git status --porcelain` returns empty string if clean
+                if (statusStdout.trim() !== '') {
+                    // There are uncommitted changes
+                    resolve({
+                        success: false,
+                        error: 'Precisa salvar suas modificações antes de sair de uma versão para outra'
+                    });
+                    return;
+                }
+
+                // Working directory is clean, proceed to checkout
+                exec(`git checkout ${branchName}`, { cwd: currentWorkingDirectory }, (checkoutErr, checkoutStdout, checkoutStderr) => {
+                    if (checkoutErr || checkoutStderr) {
+                        resolve({ success: false, error: checkoutStderr || checkoutErr.message });
+                    } else {
+                        resolve({ success: true, message: checkoutStdout.trim() });
+                    }
+                });
             });
         });
     });
 
     ipcMain.handle('add-branch', async (_event, branchTitle) => {
-        const sanitizedTitle = branchTitle.replace(/[^a-zA-Z0-9-_]/g, ''); // basic sanitization
-
         return new Promise((resolve) => {
-            exec(`git branch "${sanitizedTitle}"`, (error, stdout, stderr) => {
+            exec(`git branch "${branchTitle}"`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
+                if (error || stderr) {
+                    resolve({ success: false, error: stderr || error.message });
+                } else {
+                    resolve({ success: true });
+                }
+            });
+        });
+    });
+
+    ipcMain.handle('rename-branch', async (_event, branchTitle) => {
+        return new Promise((resolve) => {
+            exec(`git branch -m "${branchTitle}"`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
+                if (error || stderr) {
+                    resolve({ success: false, error: stderr || error.message });
+                } else {
+                    resolve({ success: true });
+                }
+            });
+        });
+    });
+
+    ipcMain.handle('delete-branch', async (_event, branchTitle) => {
+        return new Promise((resolve) => {
+            exec(`git branch -d "${branchTitle}"`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
                 if (error || stderr) {
                     resolve({ success: false, error: stderr || error.message });
                 } else {
