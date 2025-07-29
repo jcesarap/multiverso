@@ -2,6 +2,7 @@
 const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron')
 const path = require('node:path'); // Get path module from node, assign to path (object)
 const { exec } = require('child_process');
+const fs = require('fs').promises;
 // Code is read right to left, inside out!!!
 //      Imports electron module/framework
 //      Assigns to the left
@@ -30,6 +31,8 @@ const createWindow = () => {
 // .then() is a method used with Promises - when the thing I’m waiting for finishes, then do this next thing
 // it could be just app.whenReady().then(createWindow)... but then you couldn't do the following, or add more functions (this acts as a main())
 app.whenReady().then(() => {
+
+    /*
     ipcMain.handle('run-command', async (_event, command) => { // When renderer sends "run-command" message, this function is called
         return new Promise((resolve) => { // Declare new promise, as shell commands are asynchronous
             exec(command, (error, stdout, stderr) => { // exec, command (objects which return error (to run(js)), output and error on command (system))
@@ -43,6 +46,7 @@ app.whenReady().then(() => {
             });
         });
     });
+    */
 
     ipcMain.handle('dialog:openFile', async () => {
         const result = await dialog.showOpenDialog({
@@ -120,6 +124,40 @@ app.whenReady().then(() => {
     ipcMain.handle('set-working-directory', async (_event, dirPath) => {
         currentWorkingDirectory = dirPath;
         return true; // acknowledge success
+    });
+
+    ipcMain.handle('printDir', async (_event) => {
+        try {
+            const entries = await fs.readdir(currentWorkingDirectory);
+            const filtered = entries.filter(name => !name.startsWith('.'));
+            return filtered;
+        } catch (err) {
+            return null;
+        }
+    });
+
+    ipcMain.handle('switch-branch', async (_event, branchName) => {
+        return new Promise((resolve) => {
+            exec(`git checkout ${branchName}`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
+                if (error || stderr) {
+                    resolve({ success: false, error: stderr || error.message });
+                } else {
+                    resolve({ success: true, message: stdout.trim() });
+                }
+            });
+        });
+    });
+
+    ipcMain.handle('add-branches', async (_event, branchTitle) => {
+        return new Promise((resolve, reject) => {
+            exec(`git branch ${branchTitle}`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
+                if (error || stderr) {
+                    resolve(0);
+                } else {
+                    resolve(1);
+                }
+            });
+        });
     });
 
     createWindow();

@@ -1,5 +1,52 @@
 // Managing menus
 
+// ============================== TEMPORARY COPY
+
+function outputToList(lines, domElement) {
+    lines.forEach(line => {
+        const li = document.createElement('li');
+
+        if (line.startsWith('*')) {
+            li.textContent = line.slice(1).trim(); // Remove asterisk
+            li.classList.add('selected'); // Active branch
+        } else {
+            li.textContent = line; // Content of list item = current index of array
+        }
+
+        domElement.appendChild(li); // Add the variable to HTML
+    })
+}
+
+async function printDirectory() {
+    let dirElement = document.getElementById('dir');
+    dirElement.innerHTML = '';
+
+    let savedPath = localStorage.getItem('selectedPath');
+    if (savedPath) {
+        await window.api.setWorkingDirectory(savedPath);
+    }
+
+    let rawOutput = await window.api.printDir();
+    console.log("Directory print output:", rawOutput);
+    if (!rawOutput) {
+        alert('Pasta vazia');
+        return;
+    }
+    //let lines = parseText(rawOutput);
+    outputToList(rawOutput, dirElement);
+    //console.log("Directory print output:", lines);
+}
+
+
+
+// ================================================
+
+
+
+
+
+
+
 // Ensure the DOM is fully loaded before running scripts
 document.addEventListener("DOMContentLoaded", () => {
     const page = document.body.dataset.page;
@@ -107,7 +154,7 @@ function versionSelection() {
         // * Takes function as argument, and runs it on every element of list/array
         // * "list" is the defion of a parameter to the arrow function, so you can reference in it...
         // * To operate the current iteration of data
-        list.addEventListener("click", (event) => {
+        list.addEventListener("click", async (event) => {
             // Mark with variable target of click
             const clicked = event.target;
 
@@ -132,6 +179,10 @@ function versionSelection() {
             if (description) {
                 description.classList.add("selected"); // Visually link description to selection
             }
+            const branchName = li.textContent.trim();
+            await window.api.switchBranchOnClick(branchName);
+            alert(`Você trocou os arquivos para a versão paralela ${branchName}`);
+            printDirectory();
         });
     });
 }

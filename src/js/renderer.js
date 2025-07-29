@@ -1,6 +1,7 @@
 // const versionTest = document.getElementById('output')
 // versionTest.innerText = `This app is using Chrome (v${versions.chrome()}), Node.js (v${versions.node()}), and Electron (v${versions.electron()})`
 
+/*
 async function setupCLI() {
     const input = document.querySelector('#command input'); // Selects the first element that matches the css selector between quotes
     const output = document.querySelector('#output');
@@ -17,6 +18,28 @@ async function setupCLI() {
         }
     })
 }
+*/
+
+async function loadBranches() {
+    let branchesElement = document.getElementById('branches');
+    branchesElement.innerHTML = ''; // Clear existing list
+
+    let savedPath = localStorage.getItem('selectedPath');
+    if (savedPath) {
+        await window.api.setWorkingDirectory(savedPath);
+    }
+
+    let rawOutput = await window.api.loadBranches();
+    if (!rawOutput) {
+        alert('Nenhuma versão alternativa ainda foi criada');
+        return;
+    }
+
+    let lines = parseText(rawOutput);
+    outputToList(lines, branchesElement);
+}
+
+
 
 function signUp() {
     // You could even set this based on system username
@@ -66,17 +89,7 @@ function parseText(rawOutput) {
     return nonEmptyLines;
 }
 
-async function loadBranches() {
-    let branchesElement = document.getElementById('branches');
-    branchesElement.innerHTML = ''; // Clear existing list
-    let rawOutput = await window.api.loadBranches();
-    if (!rawOutput) {
-        alert('Failed to load branches.');
-        return;
-    }
-
-    let lines = parseText(rawOutput);
-
+function outputToList(lines, domElement) {
     lines.forEach(line => {
         const li = document.createElement('li');
 
@@ -87,26 +100,65 @@ async function loadBranches() {
             li.textContent = line; // Content of list item = current index of array
         }
 
-        branchesElement.appendChild(li); // Add the variable to HTML
+        domElement.appendChild(li); // Add the variable to HTML
     })
 }
 
-async function showBranches() {
-    const branchesElement = document.getElementById('branches');
-    const branchesOutput = await window.api.loadBranches();
+async function loadBranches() {
+    let branchesElement = document.getElementById('branches');
+    branchesElement.innerHTML = ''; // Clear existing list
 
-    if (!branchesOutput) {
-        alert("Failed to load branches");
+    let savedPath = localStorage.getItem('selectedPath');
+    if (savedPath) {
+        await window.api.setWorkingDirectory(savedPath);
+    }
+
+    let rawOutput = await window.api.loadBranches();
+    if (!rawOutput) {
+        alert('Nenhuma versão alternativa ainda foi criada');
         return;
     }
 
-    // If you returned a string:
-    output.innerText = branches;
-
-    // Or if you returned an array:
-    // output.innerText = branches.join('\n');
+    let lines = parseText(rawOutput);
+    outputToList(lines, branchesElement);
 }
 
+async function printDirectory() {
+    let dirElement = document.getElementById('dir');
+    dirElement.innerHTML = '';
+
+    let savedPath = localStorage.getItem('selectedPath');
+    if (savedPath) {
+        await window.api.setWorkingDirectory(savedPath);
+    }
+
+    let rawOutput = await window.api.printDir();
+    console.log("Directory print output:", rawOutput);
+    if (!rawOutput) {
+        alert('Pasta vazia');
+        return;
+    }
+    //let lines = parseText(rawOutput);
+    outputToList(rawOutput, dirElement);
+    //console.log("Directory print output:", lines);
+}
+
+async function newBranch() {
+    const saveButtonAction = document.getElementById('save');
+    const input = document.getElementById('title');
+
+    saveButtonAction.addEventListener('click', () => {
+        const title = input.value.trim();
+        let newBranchOutput = window.api.addBranch(title);
+        if (!newBranchOutput) {
+            alert('Falha ao criar versão paralela');
+        } else {
+            alert('Nova versão criada');
+        }
+    })
+
+    printDirectory();
+};
 
 // ========================================================
 
@@ -122,16 +174,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else if (page === 'home') {
         Home();
         loadBranches();
+        printDirectory();
     } else if (page === 'edit') {
         Edit();
     } else if (page === 'newVersion') {
         newVersion();
     } else if (page === 'history') {
         History();
+        //printDirectory();
     } else if (page === 'save') {
         Save();
     }
-
 });
 
 async function GitAccountCheck() {
