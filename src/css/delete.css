@@ -25,7 +25,7 @@
 
 #title::placeholder {
   font-size: 1.5rem; /* Adjust size as needed */
-  color: var(--grayed_text); /* Optional: placeholder color */
+  color: var(--red); /* Optional: placeholder color */
 }
 
 /* Selecting elements */
@@ -146,7 +146,7 @@ div .right {
 
 #save {
     /* STYLE */
-    background-color: #2E7D32;
+    background-color: var(--red);
     padding: 1rem;
     color: var(--white);
     border-radius: 1rem
@@ -154,58 +154,6 @@ div .right {
 
 #delete {
     color: var(--red);
-}
-
-/* 
-
-        DELETE DIALOG
-
-*/
-
-#delete-dialog {
-  /* RULE */
-  display: none;
-}
-
-#delete-dialog.show {
-  background: var(--white);
-  border-radius: 1.5rem;
-  padding: 2.5rem;
-  width: 400px;
-  text-align: center;
-  color: var(--red);
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin: auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#delete-dialog .delete-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#delete-dialog .confirm-delete {
-  background: none;
-  color: var(--grayed_text);
-  font-size: 1rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-}
-
-#delete-dialog .cancel {
-  background: var(--red);
-  color: var(--white);
-  font-size: 0.85rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
 }
 
 button:hover {

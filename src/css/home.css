@@ -151,13 +151,15 @@ div .right {
     font-size: 2rem;
 }
 
-#editar {
+#editar, 
+#delete {
     /* Style */
     background-color: transparent;
     color: var(--white);
     font-size: 1rem;
 }
 
+#editar:hover,
 #editar:hover {
     filter: brightness(65%);
     transition: filter 0.2s ease;

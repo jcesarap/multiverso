@@ -20,7 +20,10 @@ async function setupCLI() {
 }
 */
 
-function signUp() {
+let currentBranch = localStorage.getItem('currentBranch') || "";
+console.log(`Current branch is: ${currentBranch}`);
+
+async function signUp() {
     // You could even set this based on system username
     const emailInput = document.getElementById('email');
     const userNameInput = document.getElementById('username');
@@ -36,7 +39,7 @@ function signUp() {
         const userName = userNameInput.value.trim();
 
         if (!email || !userName) {
-            alert("Precisa cadastrar tanto nome quanto e-mail.");
+            await window.api.showDialog("Precisa cadastrar tanto nome quanto e-mail.");
             return;
         }
 
@@ -44,11 +47,11 @@ function signUp() {
         const userSet = await window.api.setGitUsername(userName);
 
         if (emailSet && userSet) {
-            alert("Cadastro bem-sucedido");
+            await window.api.showDialog("Cadastro bem-sucedido");
             alert(`email cadastrado: ${email}`);
             alert(`username cadastrado: ${userName}`);
         } else {
-            alert("Cadastro contém caracteres inválidos");
+            await window.api.showDialog("Cadastro contém caracteres inválidos");
         }
     });
 }
@@ -75,12 +78,16 @@ function outputToList(lines, domElement) {
         if (line.startsWith('*')) {
             li.textContent = line.slice(1).trim(); // Remove asterisk
             li.classList.add('selected'); // Active branch
+            localStorage.setItem('currentBranch', li.textContent); // Save to localStorage
+            currentBranch = li.textContent; // Save to global variable
+            console.log(`Current branch is: ${currentBranch}`);
         } else {
-            li.textContent = line; // Content of list item = current index of array
+            li.textContent = line;
         }
 
-        domElement.appendChild(li); // Add the variable to HTML
-    })
+        domElement.appendChild(li);
+    });
+    return currentBranch;
 }
 
 async function loadBranches() {
@@ -100,6 +107,37 @@ async function loadBranches() {
 
     let lines = parseText(rawOutput);
     outputToList(lines, branchesElement);
+}
+
+async function getSelectedBranch() {
+    let savedPath = localStorage.getItem('selectedPath');
+    if (savedPath) {
+        await window.api.setWorkingDirectory(savedPath);
+    }
+
+    let rawOutput = await window.api.loadBranches();
+    if (!rawOutput) {
+        alert('Nenhuma versão alternativa ainda foi criada');
+        return null;
+    }
+
+    let lines = parseText(rawOutput);
+
+    // Find the selected branch line (starts with '*')
+    let selectedLine = lines.find(line => line.startsWith('*'));
+    if (!selectedLine) {
+        alert('No selected branch found.');
+        return null;
+    }
+
+    let branchName = selectedLine.slice(1).trim();
+
+    // Save the selected branch name to localStorage and global variable
+    localStorage.setItem('currentBranch', branchName);
+    currentBranch = branchName;
+    console.log(`Current branch is: ${branchName}`);
+
+    return branchName;
 }
 
 async function printDirectory() {
@@ -147,6 +185,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         //printDirectory();
     } else if (page === 'save') {
         Save();
+    } else if (page === 'delete') {
+        Delete();
     }
 });
 
@@ -154,7 +194,7 @@ async function GitAccountCheck() {
     const profileOverlay = document.getElementById('profile-overlay'); // Same as above here
 
     if (!profileOverlay) {
-        alert("Element on renderer.js doesn't exit");
+        await window.api.showDialog("Element on renderer.js doesn't exit");
         return;
     }
 
@@ -171,7 +211,7 @@ async function GitCheck() {
     const gitReminder = document.getElementById('git-overlay');
 
     if (!gitReminder) {
-        alert("Element on renderer.js doesn't exit");
+        await window.api.showDialog("Element on renderer.js doesn't exit");
         return;
     }
 
@@ -196,7 +236,7 @@ async function Index() {
     const newProjectOverlay = document.getElementById('new-project-overlay'); // Same as above here 
 
     if (!link || !createButton || !openButton || !newProjectOverlay /*|| !recentButton*/) {
-        alert("Element on renderer.js doesn't exit");
+        await window.api.showDialog("Element on renderer.js doesn't exit");
         return;
     }
 
@@ -262,7 +302,7 @@ async function Index() {
     // })
 }
 
-function Home() {
+async function Home() {
     // Renderer
     const dirName = document.querySelector('.right h2');
     let savedPath = localStorage.getItem('selectedPath');
@@ -275,8 +315,10 @@ function Home() {
     const editButton = document.getElementById('editar');
     const historyButton = document.getElementById('history');
     const saveButton = document.getElementById('save');
-    if (!closeButton || !addButton || !editButton || !saveButton || !historyButton) {
-        alert("Element on renderer.js doesn't exit");
+    const deleteButton = document.getElementById('delete');
+
+    if (!deleteButton || !closeButton || !addButton || !editButton || !saveButton || !historyButton) {
+        await window.api.showDialog("Element on renderer.js doesn't exit");
         return;
     }
 
@@ -295,35 +337,26 @@ function Home() {
     saveButton.addEventListener('click', () => {
         window.location.href = 'save.html';
     })
+    deleteButton.addEventListener('click', async () => {
+        window.location.href = 'delete.html';
+    })
 }
 
 
-function Edit() {
+async function Edit() {
+    // Placeholder takes value 
+    let main = await getSelectedBranch();
+    let editBranchInput = document.getElementById('title');
+    editBranchInput.placeholder = `Versão Selecionada: ${main}`;
 
-    const deleteButton = document.getElementById('confirm');
     const cancelButton = document.getElementById('cancel');
     const saveButton = document.getElementById('save');
-    if (!deleteButton || !cancelButton || !saveButton) {
-        alert("Element on renderer.js doesn't exit");
+
+    if (!cancelButton || !saveButton) {
+        await window.api.showDialog("Element on renderer.js doesn't exit");
         return;
     }
 
-    deleteButton.addEventListener('click', async () => {
-        let input = document.getElementById('title');
-        let branchTitle = input.value.trim();
-        if (!input) {
-            alert("Element on renderer.js doesn't exit");
-            return;
-        }
-        if (!branchTitle) {
-            alert('Nome da versão não pode estar vazio');
-            return;
-        }
-        let outputNewVersion = await window.api.deleteBranch(branchTitle);
-        console.log(outputNewVersion);
-        // console.log("You're on path: ");
-        window.location.href = 'home.html';
-    })
     cancelButton.addEventListener('click', () => {
         window.location.href = 'home.html';
     })
@@ -332,7 +365,7 @@ function Edit() {
         let input = document.getElementById('title');
         let branchTitle = input.value.trim();
         if (!input) {
-            alert("Element on renderer.js doesn't exit");
+            await window.api.showDialog("Element on renderer.js doesn't exit");
             return;
         }
         if (!branchTitle) {
@@ -344,13 +377,9 @@ function Edit() {
         // console.log("You're on path: ");
         window.location.href = 'home.html';
     })
-
-    cancelButton.addEventListener('click', () => {
-        window.location.href = 'home.html';
-    })
 }
 
-function History() {
+async function History() {
     // Renderer
     const dirName = document.querySelector('.right h2');
 
@@ -362,7 +391,7 @@ function History() {
     const revertButton = document.getElementById('revert');
     const deleteButton = document.getElementById('confirm');
     if (!closeButton || !revertButton || !deleteButton) {
-        alert("Element on renderer.js doesn't exit");
+        await window.api.showDialog("Element on renderer.js doesn't exit");
         return;
     }
 
@@ -377,11 +406,11 @@ function History() {
     })
 }
 
-function Save() {
+async function Save() {
     const cancelButton = document.getElementById('cancel');
     const saveButton = document.getElementById('save');
     if (!cancelButton || !saveButton) {
-        alert("Element on renderer.js doesn't exit");
+        await window.api.showDialog("Element on renderer.js doesn't exit");
         return;
     }
 
@@ -389,11 +418,11 @@ function Save() {
 }
 
 
-function newVersion() { // Add new branch
+async function newVersion() { // Add new branch
     const cancelButton = document.getElementById('cancel');
     const saveButton = document.getElementById('save');
     if (!cancelButton || !saveButton) {
-        alert("Element on renderer.js doesn't exit");
+        await window.api.showDialog("Element on renderer.js doesn't exit");
         return;
     }
 
@@ -402,7 +431,7 @@ function newVersion() { // Add new branch
         let input = document.getElementById('title');
         let branchTitle = input.value.trim();
         if (!input) {
-            alert("Element on renderer.js doesn't exit");
+            await window.api.showDialog("Element on renderer.js doesn't exit");
             return;
         }
         if (!branchTitle) {
@@ -420,4 +449,42 @@ function newVersion() { // Add new branch
     })
 }
 
+async function Delete() {
+    let main = await getSelectedBranch();
+    const cancelButton = document.getElementById('cancel');
+    const deleteButton = document.getElementById('save'); // Leave this, so CSS remains unchanged
+    if (!cancelButton || !deleteButton) {
+        await window.api.showDialog("Element on renderer.js doesn't exit");
+        return;
+    }
 
+    // console.log("You're on path: ");
+    deleteButton.addEventListener('click', async () => {
+        let input = document.getElementById('title');
+        if (!input) {
+            await window.api.showDialog("Element on renderer.js doesn't exist");
+            return;
+        }
+        let target = input.value.trim();
+        if (main === target) {
+            await window.api.showDialog("Você não pode apagar o universo (versão) que você está. Troque, depois tente de novo");
+            return;
+        } else if (!target) {
+            await window.api.showDialog("Nome da versão não pode estar vazio");
+            return;
+        }
+
+        const result = await window.api.deleteBranch(target);
+        if (!result.success) {
+            await window.api.showDialog("Versão não encontrada");
+            return;
+        }
+        // console.log("You're on path: ");
+        window.location.href = 'home.html';
+    })
+
+    cancelButton.addEventListener('click', () => {
+        window.location.href = 'home.html';
+
+    })
+}

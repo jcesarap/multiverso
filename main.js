@@ -228,15 +228,23 @@ app.whenReady().then(() => {
         });
     });
 
-    ipcMain.handle('delete-branch', async (_event, branchTitle) => {
+    ipcMain.handle('delete-branch', async (_event, currentBranch) => {
         return new Promise((resolve) => {
-            exec(`git branch -d "${branchTitle}"`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
+            exec(`git branch -d "${currentBranch}"`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
                 if (error || stderr) {
                     resolve({ success: false, error: stderr || error.message });
                 } else {
                     resolve({ success: true });
                 }
             });
+        });
+    });
+
+    ipcMain.handle('show-dialog', async (_event, message) => {
+        await dialog.showMessageBox({
+            type: 'warning',
+            title: 'Erro',
+            message: message,
         });
     });
 
