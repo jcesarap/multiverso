@@ -79,6 +79,7 @@ div .right {
 .right #header {
     position: fixed;
     top: 4rem;
+    right: 5rem;
 }
 
 #button-close {

@@ -56,15 +56,70 @@ app.whenReady().then(() => {
     });
 
     ipcMain.handle('check-git', async () => {
-        return new Promise((resolve) => {
-            exec('git --version', (error, stdout, stderr) => {
-                if (error || stderr) {
-                    resolve(false); // Git not installed or error
+        return new Promise((resolve) => { // Variable in parameter, used in promise
+            exec('git --version', (error, stdout) => {
+                if (error) {
+                    resolve(0); // Something went wrong, treat as no version
+                } else if (stdout.includes('version')) {
+                    resolve(1); // Git is installed, and output includes "version"
                 } else {
-                    resolve(stdout.trim()); // Git version string
+                    resolve(0); // Output didn't include the expected word
                 }
             });
         });
+    });
+
+    ipcMain.handle('check-git-setup', async () => {
+        return new Promise((resolve) => {
+            exec('git config user.name', (err1, name) => { // Only continues to the second, if the first is properly setup
+                exec('git config user.email', (err2, email) => {
+                    const isNameSet = !err1 && name.trim().length > 0;
+                    const isEmailSet = !err2 && email.trim().length > 0;
+
+                    if (isNameSet && isEmailSet) {
+                        resolve(1); // Properly set up
+                    } else {
+                        resolve(0); // Missing name or email
+                    }
+                });
+            });
+        });
+    });
+
+    // Set Git username (returns true if success, false otherwise)
+    ipcMain.handle('set-git-username', async (_event, userName) => {
+        return new Promise((resolve) => {
+            exec(`git config --global user.name "${userName}"`, (error, stdout, stderr) => {
+                resolve(!error && !stderr); // true if success
+            });
+        });
+    });
+
+    // Set Git email (returns true if success, false otherwise)
+    ipcMain.handle('set-git-email', async (_event, email) => {
+        return new Promise((resolve) => {
+            exec(`git config --global user.email "${email}"`, (error, stdout, stderr) => {
+                resolve(!error && !stderr); // true if success
+            });
+        });
+    });
+
+    ipcMain.handle('load-branches', async (_event) => {
+        return new Promise((resolve, reject) => {
+            exec(`git branch`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
+                if (error || stderr) {
+                    resolve(null);
+                } else {
+                    resolve(stdout.trim());
+                }
+            });
+        });
+    });
+
+    let currentWorkingDirectory = process.cwd();
+    ipcMain.handle('set-working-directory', async (_event, dirPath) => {
+        currentWorkingDirectory = dirPath;
+        return true; // acknowledge success
     });
 
     createWindow();

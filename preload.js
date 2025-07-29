@@ -6,9 +6,18 @@ contextBridge.exposeInMainWorld('api', { // To object named versions
     chrome: () => process.versions.chrome,
     electron: () => process.versions.electron,
     ping: () => ipcRenderer.invoke('ping'), // invoke (send message on) ping (channel); what is the response?
+
     runCommand: (cmd) => ipcRenderer.invoke('run-command', cmd),
+
     openFile: () => ipcRenderer.invoke('dialog:openFile'),
     basename: (fullPath) => path.basename(fullPath),
     openExternal: (url) => ipcRenderer.send('open-external', url),
     checkGit: () => ipcRenderer.invoke('check-git'),
+    checkGitSetup: () => ipcRenderer.invoke('check-git-setup'),
+    setGitUsername: (username) => ipcRenderer.invoke('set-git-username', username),
+    setGitEmail: (email) => ipcRenderer.invoke('set-git-email', email),
+    loadBranches: () => ipcRenderer.invoke('load-branches'),
+    setWorkingDirectory: (dirPath) => ipcRenderer.invoke('set-working-directory', dirPath),
+    //: () => ipcRenderer.invoke('load-branches'),
+    // for /f "delims=" %f in ('dir /b ^| findstr /v /b "\."') do @echo %f
 }) 

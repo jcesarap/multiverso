@@ -207,6 +207,7 @@ img {
 #profile-overlay.show {
     /* Styles elements with #id and .class         (. is like + on cc) */
     display: flex;
+    z-index: 1;
     /* this more specific rule, applies but this, to the former ones */
 }
 
