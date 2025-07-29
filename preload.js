@@ -18,5 +18,5 @@ contextBridge.exposeInMainWorld('api', { // To object named versions
     setWorkingDirectory: (dirPath) => ipcRenderer.invoke('set-working-directory', dirPath),
     printDir: () => ipcRenderer.invoke('printDir'),
     switchBranchOnClick: (branchName) => ipcRenderer.invoke('switch-branch', branchName),
-    addBranch: (branchTitle) => ipcRenderer.invoke('switch-branch', branchTitle),
+    addBranch: (branchTitle) => ipcRenderer.invoke('add-branch', branchTitle),
 }) 

@@ -187,6 +187,37 @@ function versionSelection() {
     });
 }
 
+async function newBranch() {
+    const saveButtonAction = document.getElementById('save');
+    const input = document.getElementById('title');
+
+    const dirPath = localStorage.getItem('selectedPath'); // ✅ FIX
+    if (!dirPath) {
+        alert('Nenhum caminho de diretório foi selecionado');
+        return;
+    }
+
+    // Go to repo directory
+    await window.api.setWorkingDirectory(dirPath);
+    localStorage.setItem('selectedPath', dirPath);
+
+    saveButtonAction.addEventListener('click', async () => {
+        const title = input.value.trim();
+        if (!title) {
+            alert('Nome da versão não pode estar vazio');
+            return;
+        }
+
+        let newBranchOutput = await window.api.addBranch(title);
+        if (!newBranchOutput) {
+            alert('Falha ao criar versão paralela');
+        } else {
+            alert('Nova versão criada');
+            loadBranches();
+        }
+    });
+}
+
 
 function confirmDeletion() {
     // SOURCING DOM ELEMENTS

@@ -148,13 +148,15 @@ app.whenReady().then(() => {
         });
     });
 
-    ipcMain.handle('add-branches', async (_event, branchTitle) => {
-        return new Promise((resolve, reject) => {
-            exec(`git branch ${branchTitle}`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
+    ipcMain.handle('add-branch', async (_event, branchTitle) => {
+        const sanitizedTitle = branchTitle.replace(/[^a-zA-Z0-9-_]/g, ''); // basic sanitization
+
+        return new Promise((resolve) => {
+            exec(`git branch "${sanitizedTitle}"`, (error, stdout, stderr) => {
                 if (error || stderr) {
-                    resolve(0);
+                    resolve({ success: false, error: stderr || error.message });
                 } else {
-                    resolve(1);
+                    resolve({ success: true });
                 }
             });
         });

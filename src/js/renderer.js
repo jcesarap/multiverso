@@ -20,27 +20,6 @@ async function setupCLI() {
 }
 */
 
-async function loadBranches() {
-    let branchesElement = document.getElementById('branches');
-    branchesElement.innerHTML = ''; // Clear existing list
-
-    let savedPath = localStorage.getItem('selectedPath');
-    if (savedPath) {
-        await window.api.setWorkingDirectory(savedPath);
-    }
-
-    let rawOutput = await window.api.loadBranches();
-    if (!rawOutput) {
-        alert('Nenhuma versão alternativa ainda foi criada');
-        return;
-    }
-
-    let lines = parseText(rawOutput);
-    outputToList(lines, branchesElement);
-}
-
-
-
 function signUp() {
     // You could even set this based on system username
     const emailInput = document.getElementById('email');
@@ -133,7 +112,6 @@ async function printDirectory() {
     }
 
     let rawOutput = await window.api.printDir();
-    console.log("Directory print output:", rawOutput);
     if (!rawOutput) {
         alert('Pasta vazia');
         return;
@@ -143,22 +121,7 @@ async function printDirectory() {
     //console.log("Directory print output:", lines);
 }
 
-async function newBranch() {
-    const saveButtonAction = document.getElementById('save');
-    const input = document.getElementById('title');
 
-    saveButtonAction.addEventListener('click', () => {
-        const title = input.value.trim();
-        let newBranchOutput = window.api.addBranch(title);
-        if (!newBranchOutput) {
-            alert('Falha ao criar versão paralela');
-        } else {
-            alert('Nova versão criada');
-        }
-    })
-
-    printDirectory();
-};
 
 // ========================================================
 
@@ -168,7 +131,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Load attribute in js
     const page = document.body.dataset.page;
     if (page === 'index') {
-        await setupCLI();
+        // await setupCLI();
         Index();
         signUp();
     } else if (page === 'home') {
@@ -197,18 +160,15 @@ async function GitAccountCheck() {
 
     const isGitSetup = await window.api.checkGitSetup();
     if (isGitSetup === 1) {
-        console.log('Git is properly set up.');
         return 1;
     } else {
         profileOverlay.classList.add('show');
-        console.warn('Git is not properly set up.');
         return 0;
     }
 }
 
 async function GitCheck() {
     const gitReminder = document.getElementById('git-overlay');
-
 
     if (!gitReminder) {
         alert("Element on renderer.js doesn't exit");
@@ -218,8 +178,6 @@ async function GitCheck() {
     window.api.checkGit().then((result) => {
         if (!result) {
             gitReminder.classList.add('show');
-        } else {
-            console.log('Git is installed:', result);
         }
     });
 }
@@ -340,6 +298,7 @@ function Home() {
     })
 }
 
+
 function Edit() {
     const deleteButton = document.getElementById('confirm');
     const cancelButton = document.getElementById('cancel');
@@ -352,22 +311,6 @@ function Edit() {
     deleteButton.addEventListener('click', () => {
         window.location.href = 'home.html';
     })
-    cancelButton.addEventListener('click', () => {
-        window.location.href = 'home.html';
-    })
-    saveButton.addEventListener('click', () => {
-        window.location.href = 'home.html';
-    })
-}
-
-function newVersion() {
-    const cancelButton = document.getElementById('cancel');
-    const saveButton = document.getElementById('save');
-    if (!cancelButton || !saveButton) {
-        alert("Element on renderer.js doesn't exit");
-        return;
-    }
-
     cancelButton.addEventListener('click', () => {
         window.location.href = 'home.html';
     })
@@ -406,15 +349,51 @@ function History() {
 function Save() {
     const cancelButton = document.getElementById('cancel');
     const saveButton = document.getElementById('save');
+
     if (!cancelButton || !saveButton) {
         alert("Element on renderer.js doesn't exit");
         return;
     }
 
-    cancelButton.addEventListener('click', () => {
-        window.location.href = 'home.html';
-    })
     saveButton.addEventListener('click', () => {
         window.location.href = 'home.html';
     })
+
+    cancelButton.addEventListener('click', () => {
+        window.location.href = 'home.html';
+    })
 }
+
+
+function newVersion() { // Add new branch
+    const cancelButton = document.getElementById('cancel');
+    const saveButton = document.getElementById('save');
+    if (!cancelButton || !saveButton) {
+        alert("Element on renderer.js doesn't exit");
+        return;
+    }
+
+    // console.log("You're on path: ");
+    saveButton.addEventListener('click', async () => {
+        let input = document.getElementById('title');
+        let branchTitle = input.value.trim();
+        if (!input) {
+            alert("Element on renderer.js doesn't exit");
+            return;
+        }
+        if (!branchTitle) {
+            alert('Nome da versão não pode estar vazio');
+            return;
+        }
+        const outputNewVersion = await window.api.addBranch(branchTitle);
+        console.log(outputNewVersion);
+        // console.log("You're on path: ");
+        window.location.href = 'home.html';
+    })
+
+    cancelButton.addEventListener('click', () => {
+        window.location.href = 'home.html';
+    })
+}
+
+
