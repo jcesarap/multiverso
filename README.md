@@ -13,7 +13,7 @@ Nosso objetivo é tornar o controle de versões ACESSÍVEL para qualquer pessoal
 
 ## Como usar
 
-1. Baixe um release (pendente) ou compile
+1. Baixe um release ou compile
 2. Abra o programa
 3. O resto é auto explicatório (espero)
     * Se não for... basicamente ele vai abrir a pasta que você selecionar, criar um repositório git, e você vai poder manejar diferentes versões sem ter que aprender nada sobre git (a ideia é abstrair)
@@ -28,7 +28,7 @@ git clone https://github.com/jcesarap/multiverso.git
 cd multiverso
 npm install
 npx electron-forge import
-npm start                   # Ou npm run make
+npm start                   # Ou       npm run make       para compilar instalador
 ```
 
 ## Backlog

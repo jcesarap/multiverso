@@ -3,6 +3,8 @@ const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron')
 const path = require('node:path'); // Get path module from node, assign to path (object)
 const { exec } = require('child_process');
 const fs = require('fs').promises;
+
+const electronInstaller = require('electron-winstaller');
 // Code is read right to left, inside out!!!
 //      Imports electron module/framework
 //      Assigns to the left
@@ -14,6 +16,7 @@ const createWindow = () => {
     const win = new BrowserWindow({ // Stores reference to new window to win
         width: 800,
         height: 600,
+        icon: path.join(__dirname, 'assets/design/icon_heading.png'),
         menu: null,
         webPreferences: { // Object
             // Property
@@ -21,6 +24,8 @@ const createWindow = () => {
         }
     })
 
+    //Menu.setApplicationMenu(null);
+    win.setMenu(null);
     // Populate the instance
     win.maximize();
     win.loadFile('index.html') // .loadfile() is a method of BrowserWindow (which is stored in win)
