@@ -305,11 +305,34 @@ app.whenReady().then(() => {
         });
     });
 
-    ipcMain.handle('create-past-branch', async (event, previousBranchName, hash) => {
-        return new Promise((resolve, reject) => {
-            const newBranchName = `${previousBranchName}_passado`;
-            const cmd = `git switch -c ${newBranchName} ${hash}`;
+    ipcMain.handle('create-past-branch', async (event, previousBranchName, hash, date) => {
+        // Sanitize date for branch name
+        const safeDate = date.replace(/[^0-9a-zA-Z_-]/g, '-');
+        const shortHash = hash.substring(0, 7);
 
+        let baseBranchName = `${previousBranchName}_${safeDate}_${shortHash}`;
+        let branchName = baseBranchName;
+
+        // Helper function to check if a branch exists
+        function branchExists(name) {
+            return new Promise((resolve) => {
+                exec(`git branch --list ${name}`, { cwd: currentWorkingDirectory }, (error, stdout) => {
+                    resolve(stdout.trim() !== '');
+                });
+            });
+        }
+
+        // Find unique branch name by appending a number suffix if needed
+        let suffix = 1;
+        while (await branchExists(branchName)) {
+            branchName = `${baseBranchName}_${suffix}`;
+            suffix++;
+        }
+
+        // Now create the branch
+        const cmd = `git switch -c ${branchName} ${hash}`;
+
+        return new Promise((resolve, reject) => {
             exec(cmd, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Error creating past branch: ${stderr}`);
@@ -321,6 +344,7 @@ app.whenReady().then(() => {
             });
         });
     });
+
 
     createWindow();
 });

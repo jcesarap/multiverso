@@ -1,6 +1,10 @@
 // const versionTest = document.getElementById('output')
 // versionTest.innerText = `This app is using Chrome (v${versions.chrome()}), Node.js (v${versions.node()}), and Electron (v${versions.electron()})`
 
+let selectedCommitHash = null;
+let selectedCommitDate = null;
+let previousBranchName = 'main'; // or set dynamically
+
 /*
 async function setupCLI() {
     const input = document.querySelector('#command input'); // Selects the first element that matches the css selector between quotes
@@ -143,6 +147,16 @@ async function loadCommits() {
     let commits;
     try {
         commits = JSON.parse(rawJSON);
+
+        if (commits.length > 0) {
+            selectedCommitHash = commits[0].hash;
+
+            // Parse date and convert to ISO string (detailed with time)
+            const dateObj = new Date(commits[0].date);
+            selectedCommitDate = dateObj.toISOString(); // "2025-07-30T14:23:05.000Z" format
+
+            previousBranchName = 'main'; // Adjust if necessary
+        }
     } catch (e) {
         console.error('[loadCommits] Failed to parse JSON:', e);
         await window.api.showDialog('Falha ao interpretar os dados dos commits');
@@ -156,11 +170,11 @@ async function loadCommits() {
 
         const li = document.createElement('li');
         li.innerHTML = `
-      <strong>${commit.title}</strong><br>
-      <em>${commit.date}</em><br>
-      <code>${commit.hash}</code>
-      ${commit.description ? `<p>${commit.description}</p>` : ''}
-    `;
+          <strong>${commit.title}</strong><br>
+          <em>${commit.date}</em><br>
+          <code>${commit.hash}</code>
+          ${commit.description ? `<p>${commit.description}</p>` : ''}
+        `;
         commitsElement.appendChild(li);
     });
 
@@ -457,9 +471,22 @@ async function History() {
     closeButton.addEventListener('click', () => {
         window.location.href = 'home.html';
     })
-    revertButton.addEventListener('click', () => {
-        window.location.href = 'home.html';
-    })
+    revertButton.addEventListener('click', async () => {
+        if (!selectedCommitHash || !previousBranchName || !selectedCommitDate) {
+            await window.api.showDialog('Dados do commit não carregados ainda.');
+            return;
+        }
+
+        try {
+            console.log(`[Revert] Creating branch from ${previousBranchName} at ${selectedCommitHash} dated ${selectedCommitDate}`);
+            await window.api.createPastBranch(previousBranchName, selectedCommitHash, selectedCommitDate);
+            await window.api.showDialog('Branch criada com sucesso!');
+            window.location.href = 'home.html';
+        } catch (error) {
+            console.error('[Revert] Error:', error);
+            await window.api.showDialog('Erro ao criar a branch do passado.');
+        }
+    });
     deleteButton.addEventListener('click', () => {
         window.location.href = 'home.html';
     })
