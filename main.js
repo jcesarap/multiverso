@@ -4,7 +4,6 @@ const path = require('node:path'); // Get path module from node, assign to path 
 const { exec } = require('child_process');
 const fs = require('fs').promises;
 
-const electronInstaller = require('electron-winstaller');
 // Code is read right to left, inside out!!!
 //      Imports electron module/framework
 //      Assigns to the left
