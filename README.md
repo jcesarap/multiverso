@@ -33,13 +33,57 @@ npm start                   # Ou       npm run make       para compilar instalad
 
 ## Backlog
 > Estamos no MVP, ainda pesquisando e testando para mais estabilidade. Falando em pesquisa, as próximas funções serão escolhidas baseadas em feedback, mas aqui estão algumas que pensamos:
-* [ ] Criar pacote de instalação
-* [ ] Configurar Auto-update
-* [ ] Testes e melhorar estabilidade
-* [ ] Testar hot-reload em apps como Photoshop (e se é possível implementar do nosso lado, caso já não funcione)
+
+#### Prioridade 1
+> Para uso mais básico do app.
+* [ ] Estudar mais a fundo
+    * [ ] Electron IPC
+    * [ ] Importação controlada de funções
+* [ ] Pacotes
+  * [ ] Criar pacote de instalação
+    * [ ] Windows
+    * [ ] Linux (Flatpak)
+  * [ ] Configurar Auto-update
+* [ ] Correção de erros encontrados nos primeiros testes (definição pendente)
 * [ ] Refatorar (melhorar qualidade do código)
+  * [ ] Dividir regras CSS em grupos - separados por comentários visualmente fáceis de ver, separar regras baseado em que partes macro da interface estão sendo feitas
+  * [ ] Tentar minimizar o número de regras
+  * [ ] Pegar feedback em como melhorar o código
+  * [ ] Como aprimorar facilidade de testar a lógica JS? Abrindo scripts para o terminal (além do Electron(como?))? Usando algo como Swagger?
 * [ ] React (reescrever nele para aprender sobre)
-> Nota pessoal: O resto do backlog está em `Projetos/Multiverso/Eisenhower.md`
+    * [ ] Criar componentes "toast" (para contextualizar o usuário sobre o necessário de como o app funciona (como avisar ao trocar de branch, de forma não interruptiva), com time-out, e texto como argumento)
+
+#### Prioridade 2
+> Conveniências essenciais
+* [ ] Mostrar projetos abertos recentemente
+* [ ] Automatizando git
+  * [ ] Instalar automaticamente, se não for encontrado
+  * [ ] Login opcional (ao abrir o app ele automaticamente se cadastra com o nome do usuário do sistema, se já não houver uma conta)
+* [ ] Testar hot-reload em apps como Photoshop (e se é possível implementar do nosso lado, caso já não funcione)
+    * [ ] Ou aviso (toast) de que nem todos os apps suportam hot reload
+
+#### Prioridade 3
+> Funcões importantes
+* [ ] Testar se é possível salvar sem descrição - tornar possível, caso não seja
+* [ ] Design Responsivo (deve ser implementado apenas após refatoração, certas partes do código precisam de melhorias)
+
+#### Prioridade 4
+> Conveniências - ordem a se determinar por feedback
+* [ ] Botão para salvar rápido
+* [ ] File manager functions - Funções de renomear, ícones de tipo de arquivo, e opção de selecionar e abrir (e escolher com que app abrir os arquivos)
+* [ ] Redesign
+  * [ ] Mais contextualização (texto) do app
+  * [ ] Gifs mostrando como ele funciona
+  * [ ] Mais minimalista, menos cores sólidas
+
+#### Ideias
+> Ideias interessantes que só são realistas e viáveis (e portanto, a serem desenvolvidas) dependendo do feedback dos usuários.
+* [ ] Cloud backup (Monetizar? Ótimo para praticar server/back-end (notas de estudo em /Dies Novas/Eisenhower))
+  * [ ] Sistema de conta
+  * [ ] Sistema de pagamento
+  * [ ] Cloud service para backup dos projetos importantes (usar NextCloud com implementação própria?)
+
+---
 
 ## Contribuindo
 Contribuições são muito bem-vindas!
