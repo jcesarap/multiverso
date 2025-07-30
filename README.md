@@ -75,6 +75,7 @@ npm start                   # Ou       npm run make       para compilar instalad
   * [ ] Mais contextualização (texto) do app
   * [ ] Gifs mostrando como ele funciona
   * [ ] Mais minimalista, menos cores sólidas
+  * [ ] Mais temático (remetendo mais à multiverso)
 
 #### Ideias
 > Ideias interessantes que só são realistas e viáveis (e portanto, a serem desenvolvidas) dependendo do feedback dos usuários.
