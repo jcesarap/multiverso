@@ -314,7 +314,8 @@ app.whenReady().then(() => {
         const safeDate = date.replace(/[^0-9a-zA-Z_-]/g, '-');
         const shortHash = hash.substring(0, 7);
 
-        let baseBranchName = `${previousBranchName}_${safeDate}_${shortHash}`;
+        // Add "PASSADO_" prefix to the branch name
+        let baseBranchName = `PASSADO_${previousBranchName}_${safeDate}_${shortHash}`;
         let branchName = baseBranchName;
 
         // Helper function to check if a branch exists

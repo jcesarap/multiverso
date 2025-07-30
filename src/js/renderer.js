@@ -480,7 +480,7 @@ async function History() {
         try {
             console.log(`[Revert] Creating branch from ${previousBranchName} at ${selectedCommitHash} dated ${selectedCommitDate}`);
             await window.api.createPastBranch(previousBranchName, selectedCommitHash, selectedCommitDate);
-            await window.api.showDialog('Branch criada com sucesso!');
+            await window.api.showDialog('Bifurcação criada com versão do passado!');
             window.location.href = 'home.html';
         } catch (error) {
             console.error('[Revert] Error:', error);
