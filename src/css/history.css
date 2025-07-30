@@ -150,7 +150,7 @@ div .left {
     left: 35rem;
 }
 
-.column.left .versions {
+.column.left .commits {
     position: fixed;
     top: 13rem;
     left: 10rem;
@@ -164,38 +164,39 @@ div .left {
     font-size: 1rem;
 }
 
-ul.versions {
+ul.commits {
     /* WHERE */
-    position: absolute;
+    position: fixed;
     /* Style */
     overflow: auto;
     width: 50rem;
     height: 30rem;
 }
 
-.versions li.selected {
+.commits li.selected {
     color: var(--blue);
     border-left: 1rem solid var(--blue);
     border-radius: 1rem;
 }
 
-.versions p.selected {
+.commits p.selected {
     color: var(--blue);
 }
 
-.versions li.selected {
+.commits li.selected {
     color: var(--blue);
     /* Blue border on the left */
     padding-left: 1rem;
     /* Optional: space between text and border */
+    box-sizing: border-box;
 }
 
 
-.versions li {
+.commits li {
     margin-bottom: 4rem;
 }
 
-.versions p {
+.commits p {
     padding-bottom: 0;
     padding-left: 3rem;
 }

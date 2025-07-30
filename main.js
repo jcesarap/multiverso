@@ -248,6 +248,80 @@ app.whenReady().then(() => {
         });
     });
 
+    ipcMain.handle('git-commit', async (_event, commitTitle, commitBody) => {
+        return new Promise((resolve) => {
+
+            exec('git add .', { cwd: currentWorkingDirectory }, (addError, addStdout, addStderr) => {
+                if (addError || addStderr) {
+                    return resolve({ success: false, error: addStderr || addError.message });
+                }
+
+                const commitCommand = `git commit --allow-empty -m "${commitTitle}" -m "${commitBody}"`;
+                exec(commitCommand, { cwd: currentWorkingDirectory }, (commitError, commitStdout, commitStderr) => {
+                    if (commitError) {
+
+                        const noChangesMessage = 'nothing to commit';
+                        if (commitStderr && commitStderr.includes(noChangesMessage)) {
+                            return resolve({ success: false, noChanges: true });
+                        }
+                        return resolve({ success: false, error: commitStderr || commitError.message });
+                    }
+
+                    if (commitStdout.includes('nothing to commit')) {
+                        return resolve({ success: false, noChanges: true });
+                    }
+
+                    resolve({ success: true, output: commitStdout });
+                });
+            });
+        });
+    });
+
+    ipcMain.handle('load-commits', async () => {
+        return new Promise((resolve) => {
+            const cmd = `git log --date=format:"%b %d %H:%M" --pretty=format:"%H%x1f%s%x1f%b%x1f%ad%x1e"`;
+
+            exec(cmd, { cwd: currentWorkingDirectory }, (error, stdout) => {
+                if (error) {
+                    console.error('Git error:', error);
+                    return resolve(null);
+                }
+
+                // Make sure output ends with record separator to avoid partial commits
+                const output = stdout.endsWith('\x1e') ? stdout : stdout + '\x1e';
+
+                // Split commits by record separator \x1e, filtering empty entries
+                const commitsRaw = output.split('\x1e').filter(Boolean);
+
+                // Trim whitespace on each part to clean newlines or spaces
+                const commits = commitsRaw.map(commit => {
+                    const parts = commit.split('\x1f').map(part => part.trim());
+                    const [hash, title, description, date] = parts;
+                    return { hash, title, description, date };
+                });
+
+                resolve(JSON.stringify(commits));
+            });
+        });
+    });
+
+    ipcMain.handle('create-past-branch', async (event, previousBranchName, hash) => {
+        return new Promise((resolve, reject) => {
+            const newBranchName = `${previousBranchName}_passado`;
+            const cmd = `git switch -c ${newBranchName} ${hash}`;
+
+            exec(cmd, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error creating past branch: ${stderr}`);
+                    reject(new Error(stderr));
+                    return;
+                }
+                console.log(`Created past branch: ${stdout}`);
+                resolve(stdout);
+            });
+        });
+    });
+
     createWindow();
 });
 

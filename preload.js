@@ -23,4 +23,7 @@ contextBridge.exposeInMainWorld('api', { // To object named versions
     deleteBranch: (currentBranch) => ipcRenderer.invoke('delete-branch', currentBranch),
     ensureGitSetup: () => ipcRenderer.invoke('ensure-git-setup'),
     showDialog: (message) => ipcRenderer.invoke('show-dialog', message),
+    gitCommit: (commitTitle, commitBody) => ipcRenderer.invoke('git-commit', commitTitle, commitBody),
+    loadCommits: () => ipcRenderer.invoke('load-commits'),
+    createPastBranch: (previousBranchName, hash) => ipcRenderer.invoke('create-past-branch', previousBranchName, hash),
 }) 

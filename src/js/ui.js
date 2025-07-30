@@ -19,6 +19,10 @@ function outputToList(lines, domElement) {
 
 async function printDirectory() {
     let dirElement = document.getElementById('dir');
+    if (!dirElement) {
+        console.warn("[printDirectory] No #dir element found, skipping directory print");
+        return;
+    }
     dirElement.innerHTML = '';
 
     let savedPath = localStorage.getItem('selectedPath');
@@ -51,7 +55,6 @@ async function printDirectory() {
 document.addEventListener("DOMContentLoaded", () => {
     const page = document.body.dataset.page;
     if (page === 'index') {
-        consoleMenu();
         profileMenu();
         dropdownMenu();
     } else if (page === 'home') {
@@ -63,25 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (page === 'newVersion') {
         newVersion();
     } else if (page === 'history') {
-        versionSelection();
+        commitVersionSelection();
         confirmDeletion();
     } else if (page === 'save') {
         Save();
     }
 
 });
-
-function consoleMenu() {
-    const consoleButton = document.getElementById('reminder');
-    const commandPrompt = document.getElementById('command');
-    if (!consoleButton || !commandPrompt) {
-        alert("Missing elements");
-        return;
-    }
-    consoleButton.addEventListener('click', () => {
-        commandPrompt.classList.toggle('show');
-    })
-}
 
 function profileMenu() {
     // CREATE
@@ -185,6 +176,60 @@ function versionSelection() {
             printDirectory();
         });
     });
+}
+
+function commitVersionSelection() {
+    const lists = document.querySelectorAll(".commits");
+
+    lists.forEach((list) => {
+        list.addEventListener("click", async (event) => {
+            console.log("[commitVersionSelection] Click event triggered");
+
+            const clicked = event.target;
+            const li = clicked.closest("li");
+
+            if (!li || !list.contains(li)) {
+                console.log("[commitVersionSelection] Click not on a valid <li>, ignoring");
+                return;
+            }
+
+            // Clear previous selections
+            list.querySelectorAll("li").forEach(item => item.classList.remove("selected"));
+
+            // Mark this <li> as selected
+            li.classList.add("selected");
+            console.log("[commitVersionSelection] Added 'selected' class to clicked <li>");
+
+            // Split the <li> text by newlines and trim each part
+            const lines = li.textContent.split('\n').map(line => line.trim()).filter(line => line !== '');
+
+            if (lines.length < 3) {
+                console.warn("[commitVersionSelection] Could not parse commit parts from lines:", lines);
+                return;
+            }
+
+            const commitTitle = lines[0];  // first line = title
+            const commitHash = lines[2];   // third line = hash
+
+            console.log(`[commitVersionSelection] Selected commit title: "${commitTitle}", hash: ${commitHash}`);
+
+            try {
+                await window.api.switchBranchOnClick(commitHash);
+                console.log("[commitVersionSelection] Called switchBranchOnClick with hash:", commitHash);
+            } catch (err) {
+                console.error("[commitVersionSelection] Error calling switchBranchOnClick:", err);
+            }
+
+            if (typeof printDirectory === 'function') {
+                printDirectory();
+                console.log("[commitVersionSelection] Called printDirectory()");
+            } else {
+                console.warn("[commitVersionSelection] printDirectory() is not defined");
+            }
+        });
+    });
+
+    console.log("[commitVersionSelection] Event listeners attached");
 }
 
 async function newBranch() {

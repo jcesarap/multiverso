@@ -30,7 +30,7 @@ async function signUp() {
     const signInButton = document.getElementById('sign'); // This is the BUTTON, not its `.value`
 
     if (!emailInput || !userNameInput || !signInButton) {
-        alert('HTML elements not found');
+        await window.api.showDialog('HTML elements not found');
         return;
     }
 
@@ -48,8 +48,8 @@ async function signUp() {
 
         if (emailSet && userSet) {
             await window.api.showDialog("Cadastro bem-sucedido");
-            alert(`email cadastrado: ${email}`);
-            alert(`username cadastrado: ${userName}`);
+            await window.api.showDialog(`email cadastrado: ${email}`);
+            await window.api.showDialog(`username cadastrado: ${userName}`);
         } else {
             await window.api.showDialog("Cadastro contém caracteres inválidos");
         }
@@ -90,6 +90,21 @@ function outputToList(lines, domElement) {
     return currentBranch;
 }
 
+function parseText(rawOutput) {
+    // Turns string into an array
+    // Split into array (breaking at \n)
+    const linesArray = rawOutput.split('\n');
+
+    // .map is a method for arrays that takes argument in regards to what it does specifically
+    // IT DOES WHATEVER IS INSIDE (), FOR EACH ARRAY ELEMENT
+    const trimmedLines = linesArray.map(line => line.trim()); // given (arbitrary name for aux_function) line => use .trim() on line
+
+    // .filter has the same structure, but keep only items that return true
+    const nonEmptyLines = trimmedLines.filter(line => line.length > 0);
+
+    return nonEmptyLines;
+}
+
 async function loadBranches() {
     let branchesElement = document.getElementById('branches');
     branchesElement.innerHTML = ''; // Clear existing list
@@ -101,12 +116,55 @@ async function loadBranches() {
 
     let rawOutput = await window.api.loadBranches();
     if (!rawOutput) {
-        alert('Nenhuma versão alternativa ainda foi criada');
+        await window.api.showDialog('Nenhuma versão alternativa ainda foi criada');
         return;
     }
 
     let lines = parseText(rawOutput);
     outputToList(lines, branchesElement);
+}
+
+async function loadCommits() {
+    const commitsElement = document.getElementById('commits');
+    commitsElement.innerHTML = '';
+
+    console.log('[loadCommits] Fetching commit data...');
+    const rawJSON = await window.api.loadCommits();
+
+    if (!rawJSON) {
+        console.warn('[loadCommits] No data received (null or empty).');
+        await window.api.showDialog('Nenhuma versão do passado foi encontrada');
+        return;
+    }
+
+    console.log('[loadCommits] Raw JSON string received:');
+    console.log(rawJSON);
+
+    let commits;
+    try {
+        commits = JSON.parse(rawJSON);
+    } catch (e) {
+        console.error('[loadCommits] Failed to parse JSON:', e);
+        await window.api.showDialog('Falha ao interpretar os dados dos commits');
+        return;
+    }
+
+    console.log(`[loadCommits] Parsed ${commits.length} commits:`, commits);
+
+    commits.forEach((commit, index) => {
+        console.log(`[loadCommits] Rendering commit ${index + 1}:`, commit);
+
+        const li = document.createElement('li');
+        li.innerHTML = `
+      <strong>${commit.title}</strong><br>
+      <em>${commit.date}</em><br>
+      <code>${commit.hash}</code>
+      ${commit.description ? `<p>${commit.description}</p>` : ''}
+    `;
+        commitsElement.appendChild(li);
+    });
+
+    console.log('[loadCommits] Rendering complete.');
 }
 
 async function getSelectedBranch() {
@@ -117,7 +175,7 @@ async function getSelectedBranch() {
 
     let rawOutput = await window.api.loadBranches();
     if (!rawOutput) {
-        alert('Nenhuma versão alternativa ainda foi criada');
+        await window.api.showDialog('Nenhuma versão alternativa ainda foi criada');
         return null;
     }
 
@@ -126,7 +184,7 @@ async function getSelectedBranch() {
     // Find the selected branch line (starts with '*')
     let selectedLine = lines.find(line => line.startsWith('*'));
     if (!selectedLine) {
-        alert('No selected branch found.');
+        await window.api.showDialog('No selected branch found.');
         return null;
     }
 
@@ -151,7 +209,7 @@ async function printDirectory() {
 
     let rawOutput = await window.api.printDir();
     if (!rawOutput) {
-        alert('Pasta vazia');
+        await window.api.showDialog('Pasta vazia');
         return;
     }
     //let lines = parseText(rawOutput);
@@ -182,6 +240,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         newVersion();
     } else if (page === 'history') {
         History();
+        loadCommits()
         //printDirectory();
     } else if (page === 'save') {
         Save();
@@ -369,7 +428,7 @@ async function Edit() {
             return;
         }
         if (!branchTitle) {
-            alert('Nome da versão não pode estar vazio');
+            await window.api.showDialog('Nome da versão não pode estar vazio');
             return;
         }
         let outputNewVersion = await window.api.renameBranch(branchTitle);
@@ -410,11 +469,24 @@ async function Save() {
     const cancelButton = document.getElementById('cancel');
     const saveButton = document.getElementById('save');
     if (!cancelButton || !saveButton) {
-        await window.api.showDialog("Element on renderer.js doesn't exit");
+        await window.api.showDialog("Element on renderer.js doesn't exist");
         return;
     }
 
-    // console.log("You're on path: ");
+    saveButton.addEventListener('click', async () => {
+        let inputTitle = document.getElementById('title');
+        let inputDescription = document.getElementById('description');
+        if (!inputTitle || !inputDescription) {
+            await window.api.showDialog("Element on renderer.js doesn't exist");
+            return;
+        }
+        await window.api.gitCommit(inputTitle.value, inputDescription.value);
+        window.location.href = 'home.html';
+    })
+
+    cancelButton.addEventListener('click', () => {
+        window.location.href = 'home.html';
+    })
 }
 
 
@@ -435,7 +507,7 @@ async function newVersion() { // Add new branch
             return;
         }
         if (!branchTitle) {
-            alert('Nome da versão não pode estar vazio');
+            await window.api.showDialog('Nome da versão não pode estar vazio');
             return;
         }
         let outputNewVersion = await window.api.addBranch(branchTitle);
