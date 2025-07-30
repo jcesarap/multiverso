@@ -34,6 +34,7 @@ npm start                   # Ou npm run make
 ## Backlog
 > Estamos no MVP, ainda pesquisando e testando para mais estabilidade. Falando em pesquisa, as próximas funções serão escolhidas baseadas em feedback, mas aqui estão algumas que pensamos:
 * [ ] Criar pacote de instalação
+* [ ] Configurar Auto-update
 * [ ] Testes e melhorar estabilidade
 * [ ] Testar hot-reload em apps como Photoshop (e se é possível implementar do nosso lado, caso já não funcione)
 * [ ] Refatorar (melhorar qualidade do código)
