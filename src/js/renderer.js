@@ -472,6 +472,11 @@ async function History() {
         window.location.href = 'home.html';
     })
     revertButton.addEventListener('click', async () => {
+
+        const rawJSON = await window.api.loadCommits();
+        commits = JSON.parse(rawJSON);
+        selectedCommitHash = commits[0].hash;
+
         if (!selectedCommitHash || !previousBranchName || !selectedCommitDate) {
             await window.api.showDialog('Dados do commit não carregados ainda.');
             return;

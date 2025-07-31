@@ -23,8 +23,9 @@ const createWindow = () => {
         }
     })
 
-    //Menu.setApplicationMenu(null);
-    win.setMenu(null);
+    // win.setMenu(null); // Menu bar
+
+
     // Populate the instance
     win.maximize();
     win.loadFile('index.html') // .loadfile() is a method of BrowserWindow (which is stored in win)
@@ -234,7 +235,7 @@ app.whenReady().then(() => {
 
     ipcMain.handle('delete-branch', async (_event, currentBranch) => {
         return new Promise((resolve) => {
-            exec(`git branch -d "${currentBranch}"`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
+            exec(`git branch -D "${currentBranch}"`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
                 if (error || stderr) {
                     resolve({ success: false, error: stderr || error.message });
                 } else {
@@ -309,16 +310,48 @@ app.whenReady().then(() => {
         });
     });
 
-    ipcMain.handle('create-past-branch', async (event, previousBranchName, hash, date) => {
-        // Sanitize date for branch name
-        const safeDate = date.replace(/[^0-9a-zA-Z_-]/g, '-');
-        const shortHash = hash.substring(0, 7);
+    ipcMain.handle('create-past-branch', async (event, previousBranchName, hash, selectedCommitDate) => {
+        console.log('create-past-branch called with:');
+        console.log('  previousBranchName:', previousBranchName);
+        console.log('  hash:', hash);
+        console.log('  selectedCommitDate:', selectedCommitDate);
 
-        // Add "PASSADO_" prefix to the branch name
-        let baseBranchName = `PASSADO_${previousBranchName}_${safeDate}_${shortHash}`;
+        if (!hash || typeof hash !== 'string' || !/^[0-9a-fA-F]{5,40}$/.test(hash.trim())) {
+            console.error('Invalid or missing commit hash:', hash);
+            return Promise.reject(new Error(`Invalid or missing commit hash: ${hash}`));
+        }
+
+        function getCommitTitle(commitHash) {
+            return new Promise((resolve) => {
+                const cmd = `git log -1 --pretty=format:%s ${commitHash}`;
+                console.log(`Running command to get commit title: ${cmd}`);
+
+                exec(cmd, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`Error getting commit title for ${commitHash}:`, stderr || error.message);
+                        resolve('untitled');  // fallback
+                        return;
+                    }
+                    const title = stdout.trim();
+                    console.log(`Commit title for ${commitHash}: "${title}"`);
+                    resolve(title || 'untitled');
+                });
+            });
+        }
+
+        const commitTitle = await getCommitTitle(hash);
+
+        const safeTitle = commitTitle
+            .toLowerCase()
+            .replace(/[^0-9a-zA-Z_-]/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-|-$/g, '');
+
+        let baseBranchName = `versao_passada_${safeTitle}`;
         let branchName = baseBranchName;
 
-        // Helper function to check if a branch exists
+        console.log('  sanitized branch base name:', baseBranchName);
+
         function branchExists(name) {
             return new Promise((resolve) => {
                 exec(`git branch --list ${name}`, { cwd: currentWorkingDirectory }, (error, stdout) => {
@@ -327,15 +360,16 @@ app.whenReady().then(() => {
             });
         }
 
-        // Find unique branch name by appending a number suffix if needed
         let suffix = 1;
         while (await branchExists(branchName)) {
             branchName = `${baseBranchName}_${suffix}`;
             suffix++;
         }
 
-        // Now create the branch
+        console.log('  final unique branch name:', branchName);
+
         const cmd = `git switch -c ${branchName} ${hash}`;
+        console.log('  running command:', cmd);
 
         return new Promise((resolve, reject) => {
             exec(cmd, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
@@ -344,11 +378,16 @@ app.whenReady().then(() => {
                     reject(new Error(stderr));
                     return;
                 }
-                console.log(`Created past branch: ${stdout}`);
+                console.log(`Created past branch successfully:\n${stdout}`);
                 resolve(stdout);
             });
         });
     });
+
+
+
+
+
 
 
     createWindow();
