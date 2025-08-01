@@ -46,12 +46,18 @@ npm start                   # Ou       npm run make       para compilar instalad
   * [ ] Configurar Auto-update
 * [ ] Correção de erros encontrados nos primeiros testes (definição pendente)
 * [ ] Refatorar (melhorar qualidade do código)
-  * [ ] Dividir regras CSS em grupos - separados por comentários visualmente fáceis de ver, separar regras baseado em que partes macro da interface estão sendo feitas
-  * [ ] Tentar minimizar o número de regras
   * [ ] Pegar feedback em como melhorar o código
-  * [ ] Como aprimorar facilidade de testar a lógica JS? Abrindo scripts para o terminal (além do Electron(como?))? Usando algo como Swagger?
-* [ ] React (reescrever nele para aprender sobre)
-    * [ ] Criar componentes "toast" (para contextualizar o usuário sobre o necessário de como o app funciona (como avisar ao trocar de branch, de forma não interruptiva), com time-out, e texto como argumento)
+  * [ ] CSS
+    * [ ] Dividir regras CSS em grupos - separados por comentários visualmente fáceis de ver, separar regras baseado em que partes macro da interface estão sendo feitas
+    * [ ] Tentar minimizar o número de regras
+  * [ ] JS
+    * [ ] Como aprimorar facilidade de testar a lógica JS? Abrindo scripts para o terminal (além do Electron(como?))? Usando algo como Swagger?
+    * [ ] FAZER TODAS AS FUNÇÔES FUNCIONAREM NO TERMINAL
+      * Fazer isso será complexo, mas estimulará a modularidade, já que cada função terá que ser independente da UI (e das outras, já que serão chamadas isoladamente)
+        * Fomentará bons hábitos de desenvolvimento - evoluirá mais da refatoração, do quê do desenvolvimento apressado
+      * Separe então, funções que demandarão escrita na memória secundária (Projetos abertos recentemente), daquelas que serão lidadas somente com a abertura da interface (gráfica ou não) do programa (variáveis).
+  * [ ] React (reescrever nele para aprender sobre)
+      * [ ] Criar componentes "toast" (para contextualizar o usuário sobre o necessário de como o app funciona (como avisar ao trocar de branch, de forma não interruptiva), com time-out, e texto como argumento)
 
 #### Prioridade 2
 > Conveniências essenciais
