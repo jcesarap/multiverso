@@ -36,7 +36,7 @@ npm start                   # Ou       npm run make       para compilar instalad
 > Estamos no MVP, ainda pesquisando e testando para mais estabilidade. Falando em pesquisa, as próximas funções serão escolhidas baseadas em feedback, mas aqui estão algumas que pensamos:
 
 #### Prioridade 1
-> Para uso mais básico do app.
+> Para uso mais básico do app     (**Use Sküþratt durante toda a refatoração**)
 * [ ] Estudar mais a fundo
     * [ ] Electron IPC
     * [ ] Importação controlada de funções
@@ -49,8 +49,8 @@ npm start                   # Ou       npm run make       para compilar instalad
 * [ ] Refatorar (melhorar qualidade do código)
   * [ ] Pegar feedback em como melhorar o código
   * [ ] CSS
-    * [ ] Dividir regras CSS em grupos - separados por comentários visualmente fáceis de ver, separar regras baseado em que partes macro da interface estão sendo feitas
-    * [ ] Tentar minimizar o número de regras
+    * [ ] Dividir regras CSS em grupos (e regras em WHERE e STYLE) - separados por comentários visualmente fáceis de ver, separar regras baseado em que partes macro da interface estão sendo feitas
+    * [ ] Tentar minimizar o número de regras - sem forçar (código que fica em partes diferentes da tela, precisa de regras diferentes)
   * [ ] JS
     * [ ] Como aprimorar facilidade de testar a lógica JS? Abrindo scripts para o terminal (além do Electron(como?))? Usando algo como Swagger?
     * [ ] FAZER TODAS AS FUNÇÔES FUNCIONAREM NO TERMINAL
