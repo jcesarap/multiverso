@@ -489,7 +489,7 @@ async function History() {
             window.location.href = 'home.html';
         } catch (error) {
             console.error('[Revert] Error:', error);
-            await window.api.showDialog('Erro ao criar a branch do passado.');
+            await window.api.showDialog('Erro ao criar versão do passado.');
         }
     });
     deleteButton.addEventListener('click', () => {
