@@ -72,6 +72,7 @@ npm start                   # Ou       npm run make       para compilar instalad
 > Funcões importantes
 * [ ] Testar se é possível salvar sem descrição - tornar possível, caso não seja
 * [ ] Design Responsivo (deve ser implementado apenas após refatoração, certas partes do código precisam de melhorias)
+* [ ] Button to open file manager in that directory
 
 #### Prioridade 4
 > Conveniências - ordem a se determinar por feedback
@@ -85,6 +86,7 @@ npm start                   # Ou       npm run make       para compilar instalad
 
 #### Ideias
 > Ideias interessantes que só são realistas e viáveis (e portanto, a serem desenvolvidas) dependendo do feedback dos usuários.
+* [ ] Colaboration (What tools can be used? Just Git fetch?)
 * [ ] Cloud backup (Monetizar? Ótimo para praticar server/back-end (notas de estudo em /Dies Novas/Eisenhower))
   * [ ] Sistema de conta
   * [ ] Sistema de pagamento
