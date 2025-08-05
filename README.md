@@ -65,10 +65,11 @@ npm start                   # Ou       npm run make       para compilar instalad
 
 #### Prioridade 2
 > Conveniências essenciais
-* [ ] Mostrar projetos abertos recentemente
-* [ ] Automatizando git
-  * [ ] Instalar automaticamente, se não for encontrado
-  * [ ] Login opcional (ao abrir o app ele automaticamente se cadastra com o nome do usuário do sistema, se já não houver uma conta)
+* [x] Mostrar projetos abertos recentemente
+    * [ ] Adição posterior: Remover caminho selecionado, quando não encontrado
+* [x] Automatizando git
+  * [x] Instalar automaticamente, se não for encontrado
+  * [x] Login opcional (ao abrir o app ele automaticamente se cadastra com o nome do usuário do sistema, se já não houver uma conta)
 * [ ] Testar hot-reload em apps como Photoshop (e se é possível implementar do nosso lado, caso já não funcione)
     * [ ] Ou aviso (toast) de que nem todos os apps suportam hot reload
 

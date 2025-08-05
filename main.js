@@ -55,10 +55,85 @@ app.whenReady().then(() => {
     */
 
     ipcMain.handle('dialog:openFile', async () => {
+        // Prompt the user to select a directory
         const result = await dialog.showOpenDialog({
             properties: ['openDirectory']
         });
+
+        // If a directory was selected
+        if (!result.canceled && result.filePaths.length > 0) {
+            const selectedPath = result.filePaths[0]; // Get the selected directory path
+            console.log('Selected path:', selectedPath); // DEBUG
+
+            const storageDir = app.getPath('userData'); // Get Electron's user data directory
+            const filePath = path.join(storageDir, 'recent-paths.txt'); // Path to store the recents
+            console.log('Recent paths file location:', filePath); // DEBUG
+
+            let lines = [];
+
+            try {
+                // Try reading the file contents
+                const content = await fs.readFile(filePath, 'utf-8');
+                lines = content
+                    .split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line.length > 0);
+                console.log('Loaded recent paths:', lines); // DEBUG
+            } catch (err) {
+                // File may not exist yet — that's okay
+                console.warn('Could not read recent paths file (may not exist yet):', err); // DEBUG
+            }
+
+            // Optional: Remove duplicate if it exists (to keep order)
+            lines = lines.filter(line => line !== selectedPath); // Remove if already in list
+            lines.push(selectedPath); // Add the new one to the end
+            console.log('Updated paths list:', lines); // DEBUG
+
+            // Enforce max of 100 paths
+            if (lines.length > 100) {
+                lines = lines.slice(-100);
+                console.log('Trimmed to last 100 entries'); // DEBUG
+            }
+
+            // Write the updated list back to the file
+            try {
+                await fs.writeFile(filePath, lines.join('\n'), 'utf-8');
+                console.log('Successfully wrote updated paths to file'); // DEBUG
+            } catch (err) {
+                console.error('Failed to write recent paths file:', err); // DEBUG
+            }
+        } else {
+            console.log('No path selected or dialog was canceled'); // DEBUG
+        }
+
+        // Return the result of the dialog to the renderer
         return result;
+    });
+
+    ipcMain.handle('load-recent-paths', async () => {
+        try {
+            const storageDir = app.getPath('userData');
+            const filePath = path.join(storageDir, 'recent-paths.txt');
+
+            // Check if file exists by trying to access it asynchronously
+            try {
+                await fs.access(filePath);
+            } catch {
+                // File does not exist
+                return [];
+            }
+
+            // Read file content
+            const content = await fs.readFile(filePath, 'utf-8');
+            const paths = content
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0);
+
+            return paths;
+        } catch (err) {
+            return null;
+        }
     });
 
     ipcMain.on('open-external', (__event, url) => {
@@ -292,12 +367,21 @@ app.whenReady().then(() => {
 
     ipcMain.handle('add-branch', async (_event, branchTitle) => {
         return new Promise((resolve) => {
+            if (!currentWorkingDirectory) {
+                return resolve({ success: false, error: 'Working directory not set' });
+            }
+
             exec(`git branch "${branchTitle}"`, { cwd: currentWorkingDirectory }, (error, stdout, stderr) => {
-                if (error || stderr) {
-                    resolve({ success: false, error: stderr || error.message });
-                } else {
-                    resolve({ success: true });
+                if (error) {
+                    return resolve({ success: false, error: error.message });
                 }
+
+                if (stderr) {
+                    // Git sometimes outputs warnings here
+                    console.warn('Git warning:', stderr);
+                }
+
+                resolve({ success: true, output: stdout.trim() });
             });
         });
     });

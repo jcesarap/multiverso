@@ -26,4 +26,5 @@ contextBridge.exposeInMainWorld('api', { // To object named versions
     gitCommit: (commitTitle, commitBody) => ipcRenderer.invoke('git-commit', commitTitle, commitBody),
     loadCommits: () => ipcRenderer.invoke('load-commits'),
     createPastBranch: (previousBranchName, hash, selectedCommitDate) => ipcRenderer.invoke('create-past-branch', previousBranchName, hash, selectedCommitDate),
+    loadRecentPaths: () => ipcRenderer.invoke('load-recent-paths'),
 }) 

@@ -257,14 +257,15 @@ img {
     /* WHERE */
     position: absolute;
     list-style: none;
-    margin-top: 6rem;
-    margin-left: -3rem;
+    flex-direction: column;
+    bottom: 10rem;
+    right: 20rem;
     /* STYLE */
     background-color: var(--white);
-    padding: 1rem 3rem 0.5rem 3rem;
+    padding: 1rem 3rem 0.5rem 1rem;
     border-radius: 0.5rem;
     display: none;
-    width: 10vw;
+    width: 20vw;
     /* NEW for scroll */
     max-height: 9rem;
     /* Adjust height as needed */
@@ -279,7 +280,7 @@ img {
 }
 
 #dropdown-menu.show {
-    display: block;
+    display: flex;
 }
 
 .profile-overlay-content {

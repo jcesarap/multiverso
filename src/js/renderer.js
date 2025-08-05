@@ -135,6 +135,42 @@ async function loadBranches() {
     outputToList(lines, branchesElement);
 }
 
+async function loadRecents() {
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    if (!dropdownMenu) return;
+
+    dropdownMenu.innerHTML = ''; // Clear existing list
+
+    // Load recent paths from main process
+    const recentPaths = await window.api.loadRecentPaths();
+
+    if (!recentPaths || recentPaths.length === 0) {
+        await window.api.showDialog('No recent paths found.');
+        return;
+    }
+
+    // Create <li> elements for each path and attach click listener
+    recentPaths.forEach(path => {
+        const li = document.createElement('li');
+        li.textContent = path;
+
+        li.addEventListener('click', async () => {
+            await window.api.setWorkingDirectory(path);
+            localStorage.setItem('selectedPath', path);
+            await window.api.ensureGitSetup();
+            window.location.href = 'home.html'
+            if (!result.canceled) {
+                console.log('Opened direct path:', result.filePaths[0]);
+                // You can trigger anything else needed here after opening
+            } else {
+                console.warn('Failed to open the selected path');
+            }
+        });
+        dropdownMenu.appendChild(li);
+    });
+}
+
+
 async function loadCommits() {
     const commitsElement = document.getElementById('commits');
     commitsElement.innerHTML = '';
@@ -251,6 +287,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // await setupCLI();
         Index();
         signUp();
+        loadRecents();
     } else if (page === 'home') {
         Home();
         loadBranches();
@@ -289,18 +326,24 @@ async function GitCheck() {
         return;
     }
 
-    // Inform the user something may be installed now
+    // First, check if Git is already installed silently
+    const isInstalled = await window.api.checkGit();
+
+    if (isInstalled) {
+        // Git is already installed, do nothing more
+        return;
+    }
+
+    // Git is NOT installed — show install warnings
     await window.api.showDialog("Estamos instalando algumas coisas para funcionarmos apropriadamente...");
     await window.api.showDialog("Aceite a instalação que aparecerá, e espere um pouco...");
 
-    // This will internally check and install Git if needed (single call)
+    // Call checkGit again to attempt installation
     const result = await window.api.checkGit();
 
     if (result) {
-        // Git is now installed
         await window.api.showDialog("Instalação completa.");
     } else {
-        // Installation failed or Git not found — show reminder
         gitReminder.classList.add('show');
         await window.api.showDialog("Erro ao instalar os pacotes necessários. Clique aqui para instalar manualmente.");
     }
