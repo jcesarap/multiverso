@@ -41,6 +41,11 @@ npm start                   # Ou       npm run make       para compilar instalad
 #### Prioridade 1
 > Para uso mais básico do app     (**Use Sküþratt durante toda a refatoração**)
 * [ ] Refatoração
+    * [ ] Pegue feedback DO CÓDIGO (e inclua aqui sugestões do que pode/deve melhorar)
+    * [ ] Regras CSS podem ser "sourced" - se não diretamente, através de JS?
+    * [ ] Re-design
+      * [ ] Para mais minimalismo e clareza
+      * [ ] Incluindo componentes reutilizáveis
     * [ ] State-management Centralizado (crie um único objeto ou módulo JS para guardar todos os estados da aplicação)
         * [ ] Aqui você maneja elementos selecionados - assim como sua deseleção ao sair de certas páginas
     * [ ] Event-driven (`event-handlers.js`)
@@ -48,6 +53,7 @@ npm start                   # Ou       npm run make       para compilar instalad
     * [ ] DOM Utilities module
     * [ ] UI components (crie elementos reutilizáveis)
         * [ ] Tips, Warnings and errors Component (custom component, at an absolute position, stacking with others as they're generated)
+        * [ ] Guides (components with media, title, description, skip, next and previous... *WOULD THESE BE OBJECTS???*)
     * [ ] Error-handling
         * [ ] Crie um logfile dedicado para isso (que comunica erros para o usuário, assim como para você) (centralizando erros de js da página, assim como do nodejs)
     * [ ] Constantes (`constants.js`)
@@ -56,6 +62,18 @@ npm start                   # Ou       npm run make       para compilar instalad
     * [ ] Estruturação
         * [ ] Melhor separação de preocupações,, render_xxx functions and helper-functions
         * E.g., fetch_xxx, parse_xxx, render_xxx
+    * [ ] CSS
+        * [ ] Dividir regras CSS em grupos (e regras em WHERE e STYLE) - separados por comentários visualmente fáceis de ver, separar regras baseado em que partes macro da interface estão sendo feitas
+        * [ ] Tentar minimizar o número de regras - sem forçar (código que fica em partes diferentes da tela, precisa de regras diferentes)
+    * [ ] JS
+        * [ ] Como aprimorar facilidade de testar a lógica JS? Abrindo scripts para o terminal (além do Electron(como?))? Usando algo como Swagger?
+        * [ ] FAZER TODAS AS FUNÇÔES FUNCIONAREM NO TERMINAL
+          * Fazer isso será complexo, mas estimulará a modularidade, já que cada função terá que ser independente da UI (e das outras, já que serão chamadas isoladamente)
+            * Fomentará bons hábitos de desenvolvimento - evoluirá mais da refatoração, do quê do desenvolvimento apressado
+          * Separe então, funções que demandarão escrita na memória secundária (Projetos abertos recentemente), daquelas que serão lidadas somente com a abertura da interface (gráfica ou não) do programa (variáveis).
+    * [ ] Ajustes
+        * [ ] Caminho de imagens transformados em constantes
+          * [ ] Atualize eles de `/src/design/` para `/src/images/`
 * [ ] Estudar mais a fundo
     * [ ] Electron IPC
     * [ ] Importação controlada de funções
@@ -64,20 +82,7 @@ npm start                   # Ou       npm run make       para compilar instalad
     * [ ] Windows
     * [ ] Linux (Flatpak)
   * [ ] Configurar Auto-update
-* [ ] Correção de erros encontrados nos primeiros testes (definição pendente)
-* [ ] Refatorar (melhorar qualidade do código)
-  * [ ] Pegar feedback em como melhorar o código
-  * [ ] CSS
-    * [ ] Dividir regras CSS em grupos (e regras em WHERE e STYLE) - separados por comentários visualmente fáceis de ver, separar regras baseado em que partes macro da interface estão sendo feitas
-    * [ ] Tentar minimizar o número de regras - sem forçar (código que fica em partes diferentes da tela, precisa de regras diferentes)
-  * [ ] JS
-    * [ ] Como aprimorar facilidade de testar a lógica JS? Abrindo scripts para o terminal (além do Electron(como?))? Usando algo como Swagger?
-    * [ ] FAZER TODAS AS FUNÇÔES FUNCIONAREM NO TERMINAL
-      * Fazer isso será complexo, mas estimulará a modularidade, já que cada função terá que ser independente da UI (e das outras, já que serão chamadas isoladamente)
-        * Fomentará bons hábitos de desenvolvimento - evoluirá mais da refatoração, do quê do desenvolvimento apressado
-      * Separe então, funções que demandarão escrita na memória secundária (Projetos abertos recentemente), daquelas que serão lidadas somente com a abertura da interface (gráfica ou não) do programa (variáveis).
-  * [ ] React (reescrever nele para aprender sobre)
-      * [ ] Criar componentes "toast" (para contextualizar o usuário sobre o necessário de como o app funciona (como avisar ao trocar de branch, de forma não interruptiva), com time-out, e texto como argumento)
+* [ ] Refatorar para React (reescrever nele para aprender sobre)
 
 #### Prioridade 2
 > Conveniências essenciais
