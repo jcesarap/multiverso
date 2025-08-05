@@ -3,6 +3,7 @@ const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron')
 const path = require('node:path'); // Get path module from node, assign to path (object)
 const { exec } = require('child_process');
 const fs = require('fs').promises;
+const os = require('os');
 
 // Code is read right to left, inside out!!!
 //      Imports electron module/framework
@@ -65,14 +66,63 @@ app.whenReady().then(() => {
     });
 
     ipcMain.handle('check-git', async () => {
-        return new Promise((resolve) => { // Variable in parameter, used in promise
+        const platform = os.platform();
+
+        return new Promise((resolve) => {
+            // Step 1: Check if Git is already installed
             exec('git --version', (error, stdout) => {
-                if (error) {
-                    resolve(0); // Something went wrong, treat as no version
-                } else if (stdout.includes('version')) {
-                    resolve(1); // Git is installed, and output includes "version"
+                if (!error && stdout.includes('version')) {
+                    return resolve(1);
+                }
+
+                // Git is NOT installed — try to install silently
+                if (platform === 'win32') {
+                    // Windows: Check if winget is available
+                    exec('where winget', (wingetErr) => {
+                        if (wingetErr) {
+                            // winget not found, cannot install silently
+                            return resolve(0);
+                        }
+
+                        // Install Git silently with winget
+                        exec('winget install --id Git.Git -e --silent', (installErr) => {
+                            if (installErr) {
+                                // Git installation failed
+                                return resolve(0);
+                            }
+
+                            // Step 2: Re-check if Git installed successfully
+                            exec('git --version', (postErr, postStdout) => {
+                                if (!postErr && postStdout.includes('version')) {
+                                    return resolve(1);
+                                } else {
+                                    return resolve(0);
+                                }
+                            });
+                        });
+                    });
+
+                } else if (platform === 'linux') {
+                    // Linux: Install Git silently using dnf
+                    exec('sudo dnf install -y git', (installErr) => {
+                        if (installErr) {
+                            // Git installation failed (maybe no sudo access)
+                            return resolve(0);
+                        }
+
+                        // Step 2: Re-check if Git installed successfully
+                        exec('git --version', (postErr, postStdout) => {
+                            if (!postErr && postStdout.includes('version')) {
+                                return resolve(1);
+                            } else {
+                                return resolve(0);
+                            }
+                        });
+                    });
+
                 } else {
-                    resolve(0); // Output didn't include the expected word
+                    // Unsupported platform
+                    return resolve(0);
                 }
             });
         });
@@ -80,20 +130,51 @@ app.whenReady().then(() => {
 
     ipcMain.handle('check-git-setup', async () => {
         return new Promise((resolve) => {
-            exec('git config user.name', (err1, name) => { // Only continues to the second, if the first is properly setup
+            // Try to get the Git username
+            exec('git config user.name', (err1, name) => {
+                // Only continues to the second if the first completes
                 exec('git config user.email', (err2, email) => {
+                    // Check if name and email are set (no error, and non-empty value)
                     const isNameSet = !err1 && name.trim().length > 0;
                     const isEmailSet = !err2 && email.trim().length > 0;
 
-                    if (isNameSet && isEmailSet) {
-                        resolve(1); // Properly set up
+                    let currentName;
+                    let currentEmail;
+
+                    if (isNameSet) {
+                        // Properly set up
+                        // return output - for placeholder
+                        console.log("Username properly set");
+                        currentName = name.trim();
                     } else {
-                        resolve(0); // Missing name or email
+                        // Set username based on OS'
+                        currentName = os.userInfo().username;
+                        exec(`git config --global user.name "${currentName}"`, (err) => {
+                            if (err) console.error("Failed to set username");
+                        });
                     }
+
+                    if (isEmailSet) {
+                        // Properly set up
+                        // return output - for placeholder
+                        console.log("E-mail properly set");
+                        currentEmail = email.trim();
+                    } else {
+                        // Set e-mail based on OS'
+                        currentEmail = `${os.userInfo().username}@guest.com`;
+                        exec(`git config --global user.email "${currentEmail}"`, (err) => {
+                            if (err) console.error("Failed to set email");
+                        });
+                    }
+
+                    // Properly set up
+                    // return output - for placeholder
+                    resolve([currentName, currentEmail]);
                 });
             });
         });
     });
+
 
     // Set Git username (returns true if success, false otherwise)
     ipcMain.handle('set-git-username', async (_event, userName) => {

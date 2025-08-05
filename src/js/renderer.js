@@ -28,6 +28,9 @@ let currentBranch = localStorage.getItem('currentBranch') || "";
 console.log(`Current branch is: ${currentBranch}`);
 
 async function signUp() {
+    // Get e-mail and username values
+    let [currentName, currentEmail] = await window.api.checkGitSetup();
+
     // You could even set this based on system username
     const emailInput = document.getElementById('email');
     const userNameInput = document.getElementById('username');
@@ -37,6 +40,10 @@ async function signUp() {
         await window.api.showDialog('HTML elements not found');
         return;
     }
+
+    // Placeholders
+    emailInput.placeholder = `${currentEmail}`;
+    userNameInput.placeholder = `${currentName}`;
 
     signInButton.addEventListener('click', async () => {
         const email = emailInput.value.trim();          // Get values in input, in the moment the button is pressed
@@ -271,29 +278,34 @@ async function GitAccountCheck() {
         return;
     }
 
-    const isGitSetup = await window.api.checkGitSetup();
-    if (isGitSetup === 1) {
-        return 1;
-    } else {
-        profileOverlay.classList.add('show');
-        return 0;
-    }
+    await window.api.checkGitSetup();
 }
 
 async function GitCheck() {
     const gitReminder = document.getElementById('git-overlay');
 
     if (!gitReminder) {
-        await window.api.showDialog("Element on renderer.js doesn't exit");
+        await window.api.showDialog("Element on renderer.js doesn't exist");
         return;
     }
 
-    window.api.checkGit().then((result) => {
-        if (!result) {
-            gitReminder.classList.add('show');
-        }
-    });
+    // Inform the user something may be installed now
+    await window.api.showDialog("Estamos instalando algumas coisas para funcionarmos apropriadamente...");
+    await window.api.showDialog("Aceite a instalação que aparecerá, e espere um pouco...");
+
+    // This will internally check and install Git if needed (single call)
+    const result = await window.api.checkGit();
+
+    if (result) {
+        // Git is now installed
+        await window.api.showDialog("Instalação completa.");
+    } else {
+        // Installation failed or Git not found — show reminder
+        gitReminder.classList.add('show');
+        await window.api.showDialog("Erro ao instalar os pacotes necessários. Clique aqui para instalar manualmente.");
+    }
 }
+
 
 async function Index() {
     // Criar
@@ -327,11 +339,8 @@ async function Index() {
     });
 
     openButton.addEventListener('click', async () => {
-        let accounts = await GitAccountCheck();
-        if (accounts !== 1) {
-            console.warn("Git account not properly set up.");
-            return;
-        }
+        await GitAccountCheck();
+
 
         const result = await window.api.openFile();
         if (result.canceled) {
@@ -349,12 +358,7 @@ async function Index() {
     })
 
     createButton.addEventListener('click', async () => {
-        let accounts = await GitAccountCheck();
-        if (accounts !== 1) {
-            newProjectOverlay.classList.remove('show');
-            console.warn("Git account not properly set up.");
-            return;
-        }
+        await GitAccountCheck();
 
         const result = await window.api.openFile();
         if (result.canceled) {

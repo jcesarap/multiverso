@@ -12,6 +12,9 @@ Nosso objetivo é tornar o controle de versões ACESSÍVEL para qualquer pessoal
 * **Feito para criativos**: busca tornar controle de versão ACESSÍVEL para artistas digitais, músicos, escritores e programadores
 * **Open Source**: código aberto, colaborativo e transparente. Faça parte da comunidade e contribua para o projeto!
 
+## Suporte
+* Atualmente o foco / suporte oficial é para Windows 10/11 e Linux (Fedora).
+
 ## Como usar
 
 1. Baixe um release ou compile
@@ -92,6 +95,7 @@ npm start                   # Ou       npm run make       para compilar instalad
   * [ ] Sistema de conta
   * [ ] Sistema de pagamento
   * [ ] Cloud service para backup dos projetos importantes (usar NextCloud com implementação própria?)
+* [ ] Empactar instalador git junto com app (para suporte em múltiplos sistemas)?
 
 ---
 
