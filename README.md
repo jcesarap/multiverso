@@ -40,6 +40,22 @@ npm start                   # Ou       npm run make       para compilar instalad
 
 #### Prioridade 1
 > Para uso mais básico do app     (**Use Sküþratt durante toda a refatoração**)
+* [ ] Refatoração
+    * [ ] State-management Centralizado (crie um único objeto ou módulo JS para guardar todos os estados da aplicação)
+        * [ ] Aqui você maneja elementos selecionados - assim como sua deseleção ao sair de certas páginas
+    * [ ] Event-driven (`event-handlers.js`)
+        * [ ] Single file for managing all component-to-action bindings, which is imported to every page
+    * [ ] DOM Utilities module
+    * [ ] UI components (crie elementos reutilizáveis)
+        * [ ] Tips, Warnings and errors Component (custom component, at an absolute position, stacking with others as they're generated)
+    * [ ] Error-handling
+        * [ ] Crie um logfile dedicado para isso (que comunica erros para o usuário, assim como para você) (centralizando erros de js da página, assim como do nodejs)
+    * [ ] Constantes (`constants.js`)
+        * [ ] Importe esses objetos
+        * [ ] Objeto que relaciona páginas com seus endereços, permitindo mudar o nome delas num único lugar, para todo o código
+    * [ ] Estruturação
+        * [ ] Melhor separação de preocupações,, render_xxx functions and helper-functions
+        * E.g., fetch_xxx, parse_xxx, render_xxx
 * [ ] Estudar mais a fundo
     * [ ] Electron IPC
     * [ ] Importação controlada de funções
