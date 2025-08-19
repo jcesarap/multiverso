@@ -74,6 +74,7 @@ npm start                   # Ou       npm run make       para compilar instalad
     * [ ] Ajustes
         * [ ] Caminho de imagens transformados em constantes
           * [ ] Atualize eles de `/src/design/` para `/src/images/`
+* [ ] Documentar feedback do vídeo - aqui
 * [ ] Estudar mais a fundo
     * [ ] Electron IPC
     * [ ] Importação controlada de funções
