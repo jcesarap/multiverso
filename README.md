@@ -38,6 +38,13 @@ npm start                   # Ou       npm run make       para compilar instalad
 ## Backlog
 > Estamos no MVP, ainda pesquisando e testando para mais estabilidade. Falando em pesquisa, as próximas funções serão escolhidas baseadas em feedback, mas aqui estão algumas que pensamos:
 
+#### REFATORAÇÃO
+* DYNAMIC CODE              From Linux scripts
+    1. ANTI-STATIC          - DON'T USE STRINGS.
+    2. DYNAMIC VARIABLES    - USE VARIABLES THAT CALCULATE THEIR OWN VALUES, WHEN THEY'RE DYNAMIC OR SYSTEM/CONTEXT/INPUT SPECIFIC.
+    3. WUF                  - WHOLLY UNI-SEMANTIC FUNCTIONS. FUNCTIONS DO SOMETHING, AND NOTHING ELSE BESIDES THAT.
+    4. COMMON               - Certain modules (variables also, not just functions) should be common to all others, other files and functions.
+
 #### Prioridade 1
 > Para uso mais básico do app     (**Use Sküþratt durante toda a refatoração**)
 * [ ] Refatoração
