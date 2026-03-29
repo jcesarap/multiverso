@@ -47,6 +47,15 @@ npm start                   # Ou       npm run make       para compilar instalad
 
 #### Prioridade 1
 > Para uso mais básico do app     (**Use Sküþratt durante toda a refatoração**)
+* [ ] Re-design
+    * [ ] File browser look
+        * [ ] Starting at user home
+        * [ ] Button to start multiverso on that folder/directory
+        * [ ] Indicator with multiverso is enabled for that folder/directory
+    * [ ] Quick find
+        * [ ] Quickly move to other directories
+        * [ ] Keyboard shortcut for it
+        * [ ] Toggle (between quick find and recents) [Highlighted]
 * [ ] Refatoração
     * [ ] Pegue feedback DO CÓDIGO (e inclua aqui sugestões do que pode/deve melhorar)
     * [ ] Regras CSS podem ser "sourced" - se não diretamente, através de JS?
