@@ -1,0 +1,13 @@
+:root {
+    --background-color: #1E1E1E;
+    --blue: #1976D2;
+    --white: #fffdfc;
+    --darkblue: #030019;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--darkblue);
+    color: white;
+}

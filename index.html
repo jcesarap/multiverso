@@ -1,89 +1,13 @@
-<!DOCTYPE html>
-<html>
-
-  <head> <!-- Metadata -->
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <!-- Responsive design -->
-    <link rel="stylesheet" href="src/css/index.css">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>multiverso</title>
   </head>
-
-  <body data-page="index">
-     <div class="container">
-
-      <div id="git-overlay">
-        <div class="profile-overlay-content">
-          <div class="overlay-heading">
-            <h1>Não conseguimos instalar algo que precisamos para funcionar</h1>
-            <p><a href="#" id="baixar-git">Clique aqui para instalar manualmente</a>, e depois siga os passos de instalação, e reinicie o app</p>
-          </div>
-        </div>
-      </div>
-
-
-      <div id="profile-overlay">
-        <div class="profile-overlay-content">
-          <button id="close-profile" class="close"><!-- Profile icon --></button> <!-- Border -->
-          <div class="overlay-heading">
-            <h1>Cadastro rápido (offline)</h1>
-            <p>Informações necessárias para o app funcionar - para assinar alterações/versões nas funções de colaboração</p>
-          </div>
-            <input type="email" id="email">
-            <input type="username" id="username">
-            <button id="sign">SALVAR</button>
-        </div>
-      </div>
-
-      <div id="new-project-overlay">
-        <div id="profile-overlay-content" class="profile-overlay-content">
-          <button id="close-project" class="close"><!-- Profile icon --></button> <!-- Border -->
-          <div class="overlay-heading">
-            <h1>Para criar um novo projeto: </h1>
-            <p>selecione ou crie uma nova pasta</p>
-          </div>
-            <button id="continue">Continuar</button>
-        </div>
-      </div>
-
-      <div class="column left"> <!-- Two classes separated by spaces -->
-        <div class="left_column_content">
-          <div class="logo-heading"> <!-- Goal was to align these, so create a new/more-specific rule/class, and tell it to be inline -->
-            <img src="assets/design/icon_heading.png" alt="logo" class="heading-image">
-            <h1 class="column_heading">ultiverso</h1> <!-- M removed for icon -->
-          </div>
-          <h2 class="sub_column">Design, vídeo, áudio... seja lá o que for...</h2>
-          <p class="sub_column">Crie CHECKPOINTS do seu trabalho, volte ele no tempo, alterne entre versões diferentes, ou colabore...</p>
-        </div>
-      </div>
-
-
-
-      <div class="column right"> <!-- More readable, can apply styles to both columns, or single columns -->
-        <div class="right_column_content">
-          <h3>Projetos</h3>
-          <button id="create" class="entry">Criar</button>       <!-- Blue background, white font, no borders -->
-          <button id="open"class="entry">Abrir</button>       <!-- Empty background, blue font, blue borders -->
-
-            <div id="dropdown-button" class="dropdown">
-                <button class="recentes entry">Recentes</button>
-                <button id="dropdown-icon" class="icon">∨</button>
-               <ul id="dropdown-menu">
-               </ul>
-            </div>
-          
-         </div>
-         <button class="profile" id="profile"><!-- Profile icon --></button> <!-- Border -->
-         <!-- <p id="reminder" class="reminder">BETA (Implement all features, roughly - polish design later)</p> -->
-        <div id="command">
-          <input type="CLI" placeholder="type your command">
-          <p id="output"></p>
-        </div>
-      </div>
-      
-
-      
-     </div>
-     <script src="src/js/git.js"></script>
-     <script src="src/js/renderer.js"></script>
-     <script src="src/js/ui.js"></script>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
