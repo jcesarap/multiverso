@@ -1,3 +1,6 @@
+# Nix will handle System dependencies only
+# NPM runs the rest
+
 # Enclosed in {} because it's an attribute set
 # Nix is a lazy language (opposed to eager evaluation)
 #   Meaning it doesn't calculates expressions until it needs the output
@@ -30,6 +33,7 @@
         # 'electronDeps' imports your external file. 
         # In Nix, 'import' reads a file and immediately evaluates it.
         electronDeps = import ./nix/electron-deps.nix { inherit pkgs; };
+        checkScript = import ./nix/project-deps.nix { inherit pkgs; };
       in
       # The 'in' block must return a value. Here, it returns an attribute set.
       {
@@ -42,6 +46,7 @@
             nodejs_20
             yarn
             git
+            checkScript
           ] ++ electronDeps; # '++' is the list concatenation operator.
 
           # 'shellHook' is a plain string. Bash executes this when the shell starts.

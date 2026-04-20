@@ -1,3 +1,6 @@
+# Nix will handle System dependencies only
+# NPM runs the rest
+
 # This is a function that takes an attribute set containing 'pkgs' as an argument.
 { pkgs }:
 

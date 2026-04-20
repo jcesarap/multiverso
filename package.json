@@ -4,12 +4,12 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite --port 5173",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "electron": "electron .",
-    "start": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && npm run electron\""
+    "server": "vite --port 5173",
+    "app": "electron .",
+    "=== Below are the entry points": "Above are macros",
+    "web": "npm run server",
+    "desktop": "concurrently \"npm run server\" \"wait-on http://localhost:5173 && npm run app\"",
+    "build": "vite build"
   },
   "dependencies": {
     "react": "^19.0.0",
