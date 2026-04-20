@@ -47,6 +47,10 @@
           # 'shellHook' is a plain string. Bash executes this when the shell starts.
           shellHook = ''
             export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath electronDeps}:$LD_LIBRARY_PATH
+            # This changes your prompt to start with (nix-shell)
+            export PS1="\n\[\033[1;32m\](nix-shell) \[\033[1;34m\]\w\[\033[0m\]\$ "
+            
+            echo "⚡ Electron/React Nix Environment Active"
           '';
         };
       });
