@@ -1,23 +1,19 @@
 { pkgs }:
 
 let
-  # Define your choosing of npm dependencies here
-  dependencies = [
+  npmPrograms = [
     "react"
     "react-dom"
-    "vite"
     "electron"
+    "vite"
     "concurrently"
     "wait-on"
   ];
-  
-  # Convert the Nix list into a space-separated string for Bash
-  depString = pkgs.lib.concatStringsSep " " dependencies;
+
+  programList = pkgs.lib.concatStringsSep " " npmPrograms;
 in
-pkgs.writeShellScriptBin "install-npm-deps" ''
-  echo "Checking npm dependencies: ${depString}"
-  
-  # We use --no-save if you don't want to modify package.json, 
-  # but usually, you want them synchronized.
-  npm install ${depString}
+# This first string "project-deps-install" is what creates the command name
+pkgs.writeShellScriptBin "project-deps-install" ''
+  echo "Checking project dependencies: ${programList}"
+  npm install ${programList} --no-audit --no-fund
 ''

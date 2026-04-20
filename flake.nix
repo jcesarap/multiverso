@@ -50,13 +50,22 @@
           ] ++ electronDeps; # '++' is the list concatenation operator.
 
           # 'shellHook' is a plain string. Bash executes this when the shell starts.
-          shellHook = ''
-            export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath electronDeps}:$LD_LIBRARY_PATH
-            # This changes your prompt to start with (nix-shell)
-            export PS1="\n\[\033[1;32m\](nix-shell) \[\033[1;34m\]\w\[\033[0m\]\$ "
-            
-            echo "⚡ Electron/React Nix Environment Active"
-          '';
+            shellHook = ''
+                # Force the local node_modules binaries to the front of the PATH
+                # This is the most important line for fixing "vite: command not found"
+                export PATH="$PWD/node_modules/.bin:$PATH"
+
+                # Map system libraries for Electron
+                export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath electronDeps}:$LD_LIBRARY_PATH
+                
+                # Execute your automated npm installer
+                project-deps-install
+
+                # Standardize the prompt
+                export PS1="\n\[\033[1;32m\](nix-shell) \[\033[1;34m\]\w\[\033[0m\]\$ "
+                
+                echo "⚡ Electron/React Nix Environment Active"
+            '';
         };
       });
 }
