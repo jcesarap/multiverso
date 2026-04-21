@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <section id="center">
-        <h1>Hello World</h1>
+        <h1>Hi there</h1>
         <p>Multiverso is ready.</p>
       </section>
     </>

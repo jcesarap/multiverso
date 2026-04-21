@@ -1,8 +1,23 @@
+# PENDING
+---
+* [ ] Watch intros to Tailwind CSS `on personal YouTube account`
+* [ ] LLM Assisted Introductory Programming
+* [ ] ...
+* [ ] Commit & Push before going to Linux
+* [ ] Share `Eisenhower` folders with secsulruna (essential for working on Windows)
 
-
-
-
-
+# STACK
+---
+## Front-end
+* UI & Styling: Tailwind CSS - shadcn/ui
+    * Figma - Has libraries for this, and YOU CAN MAKE EXPORTS EVERY MILESTONE, which are compatible with Lunacy, which is offline.
+    * **Minimal Designing - You can also experiment with doing wireframing as Requirement Engineering and design itself (with no concern for how it looks, only functionality, only adjusting once it reaches code, which you own and looks exactly and productively like you want)**.
+* State Management: Zustand
+## Server State & Data Fetching (For Focustopic)
+* TanStack Query (Formerly React Query). It handles caching, loading states and background syncrhonization.
+## Forms & Validation
+* React Hook Form - Manages form state and inputs with minimal re-renders.
+* Zod: Define what an e-mail or password must look like, and the library handles the rest.
 
 # REACT/VITE
 ---
