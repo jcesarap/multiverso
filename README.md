@@ -1,11 +1,3 @@
-# PENDING
----
-* [ ] Watch intros to Tailwind CSS `on personal YouTube account`
-* [ ] LLM Assisted Introductory Programming
-* [ ] ...
-* [ ] Commit & Push before going to Linux
-* [ ] Share `Eisenhower` folders with secsulruna (essential for working on Windows)
-
 # STACK
 ---
 ## Front-end
