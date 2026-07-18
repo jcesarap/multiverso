@@ -1,3 +1,4 @@
+## O que é o Multiverso?
 
 # Screenshots
 
@@ -50,6 +51,3 @@ Contribuições são muito bem-vindas!
 * O Multiverso é um software livre licenciado sob a **GNU General Public License (GPL) versão 3**.
 * Isso significa que você pode usar, modificar e distribuir o software livremente, desde que quaisquer versões modificadas também sejam distribuídas sob a mesma licença, garantindo que o código permaneça aberto para toda a comunidade.
 * Para mais detalhes, consulte: [https://www.gnu.org/licenses/gpl-3.0.html](https://www.gnu.org/licenses/gpl-3.0.html)
-
-# MACROS
-Include: home.html main.js new-branch.html README.md save.html oopPractise.js delete.html edit.html index.html preload.js src/js/renderer.js src/js/ui.js src/js/git.js src/css/new-version.css src/css/history.css src/css/edit.css src/css/index.css src/css/home.css src/css/save.css src/css/delete.css history.html create-installer.js 
