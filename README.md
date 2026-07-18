@@ -2,8 +2,8 @@
 
 # Screenshots
 
-| ![](./assets/Screenshot from 2026-07-18 08-53-07.png) | ![](./assets/Screenshot from 2026-07-18 08-53-30.png) |
-| -------------------------------------------- | -------------------------------------------- |
+![](./assets/Screenshot from 2026-07-18 08-53-07.png)
+![](./assets/Screenshot from 2026-07-18 08-53-30.png)
 
 ## O que é o Multiverso?
 
