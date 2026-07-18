@@ -2,8 +2,8 @@
 
 # Screenshots
 
-![](./assets/Screenshot from 2026-07-18 08-53-07.png)
-![](./assets/Screenshot from 2026-07-18 08-53-30.png)
+"[](https://github.com/jcesarap/multiverso/blob/before_refactor/assets/Screenshot%20from%202026-07-18%2008-53-07.png?raw=true)
+![](https://github.com/jcesarap/multiverso/blob/before_refactor/assets/Screenshot%20from%202026-07-18%2008-53-07.png?raw=true))
 
 ## O que é o Multiverso?
 
