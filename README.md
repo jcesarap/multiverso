@@ -1,6 +1,13 @@
-## O que é o Multiverso?
+# Screenshots
 
-![Multiverso Logo](./assets/design/icon_heading.png)
+## Pasta
+<img width="299" height="500" alt="image" src="https://github.com/user-attachments/assets/9561d710-dd26-4374-a8a1-36514bba9fdc" />
+
+## Pasta, versões e histórico no app
+![](https://github.com/jcesarap/multiverso/blob/before_refactor/assets/Screenshot%20from%202026-07-18%2008-53-07.png?raw=true)
+![](https://github.com/jcesarap/multiverso/blob/before_refactor/assets/Screenshot%20from%202026-07-18%2008-53-30.png?raw=true)
+
+## O que é o Multiverso?
 
 **Multiverso** é um aplicativo open source desenvolvido com Electron que traz o poder do Git para artistas, designers, músicos, desenvolvedores e qualquer pessoa que queira gerenciar versões de seus projetos de forma simples e visual.
 
@@ -47,5 +54,4 @@ Contribuições são muito bem-vindas!
 * Isso significa que você pode usar, modificar e distribuir o software livremente, desde que quaisquer versões modificadas também sejam distribuídas sob a mesma licença, garantindo que o código permaneça aberto para toda a comunidade.
 * Para mais detalhes, consulte: [https://www.gnu.org/licenses/gpl-3.0.html](https://www.gnu.org/licenses/gpl-3.0.html)
 
-# MACROS
-Include: home.html main.js new-branch.html README.md save.html oopPractise.js delete.html edit.html index.html preload.js src/js/renderer.js src/js/ui.js src/js/git.js src/css/new-version.css src/css/history.css src/css/edit.css src/css/index.css src/css/home.css src/css/save.css src/css/delete.css history.html create-installer.js 
+> Obs: Código faltando algumas boas práticas, com uma refactor pendente.
